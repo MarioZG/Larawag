@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Larawag
+namespace Larawag.EarlyBoundDriver
 {
-    public class Class1
+    class EarlyBoundDriver
     {
     }
 }
