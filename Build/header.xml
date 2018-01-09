@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataContextDriver>
+   <MainAssembly>Larawag.dll</MainAssembly>
+   <SupportUri>https://github.com/MarioZG/Larawag</SupportUri>
+</DataContextDriver>
