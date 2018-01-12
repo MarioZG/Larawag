@@ -7,5 +7,6 @@ rem  picks up the drivers immediately (without needing to click 'Add Driver').
 rem
 rem  The final part of the directory is the name of the assembly plus its public key token in brackets.
 
-xcopy /i/y *.* "%appdata%\LINQPad\Drivers\DataContext\4.6\DataContextDriverDemo (7e7bc232eb1cb80f)\"
+echo "%USERPROFILE%\AppData\Local\LINQPad\Drivers\DataContext\4.6\Larawag (e8989d3adc1704f8)\"
+xcopy /i/y Larawag.* "%USERPROFILE%\AppData\Local\LINQPad\Drivers\DataContext\4.6\Larawag (e8989d3adc1704f8)\"
 pause
