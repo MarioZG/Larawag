@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Larawag.EarlyBoundStaticDriver.ViewModels;
+using Larawag.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,7 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
     {
         public LibrarySelector()
         {
+            this.DataContext = new LibrarySelectorViewModel(new OrganizationServiceContextGenerator(), new CompilerService());
             InitializeComponent();
         }
     }

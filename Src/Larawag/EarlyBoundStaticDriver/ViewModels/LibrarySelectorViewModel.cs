@@ -1,4 +1,6 @@
-﻿using Larawag.Utils.Commands;
+﻿using Larawag.Services;
+using Larawag.Utils.Commands;
+using LINQPad.Extensibility.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +16,18 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         public ICommand CommandSelectDll { get; private set; }
         public ICommand CommandSelectClass { get; private set; }
 
+        IOrganizationServiceContextGenerator contextGenerator;
+        ICompilerService compilerService;
+        internal IConnectionInfo ConnectionInfo { get; set; }
 
-        public LibrarySelectorViewModel()
+
+        public LibrarySelectorViewModel(IOrganizationServiceContextGenerator contextGenerator, ICompilerService compilerService)
         {
             CommandGenerateDll =  new RealyAsyncCommand<object>(GenerateDllClicked);
             CommandSelectDll = new RealyAsyncCommand<object>(SelectDllClicked);
             CommandSelectClass = new RealyAsyncCommand<object>(SelectClassClicked);
+            this.contextGenerator = contextGenerator;
+            this.compilerService = compilerService;
         }
 
         private Task<object> SelectDllClicked(object arg)
@@ -32,7 +40,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
             if (dialog.ShowDialog() == true)
             {
-                //_cxInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
+                ConnectionInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
             }
 
             return null;
@@ -44,10 +52,11 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             return null;
         }
 
-        private Task<object> GenerateDllClicked(object arg)
+        private async Task<object> GenerateDllClicked(object arg)
         {
-            System.Windows.MessageBox.Show("aa");
-            return null;
+            string fileName = ".\\ContextCode.cs";
+            await contextGenerator.GenerateCode(ConnectionInfo.DatabaseInfo.CustomCxString, fileName);
+            return await compilerService.CompileCode(fileName, "CrmContext.dll");             
         }
     }
 }

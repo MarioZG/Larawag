@@ -122,8 +122,12 @@
     </Compile>
     <Compile Include="EarlyBoundStaticDriver\EarlyBoundStaticDriver.cs" />
     <Compile Include="EarlyBoundStaticDriver\ViewModels\LibrarySelectorViewModel.cs" />
+    <Compile Include="EarlyBoundStaticDriver\ViewModels\ViewModelProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CompilerService.cs" />
+    <Compile Include="Services\Interfaces\ICompilerService.cs" />
+    <Compile Include="Services\Interfaces\IOrganizationServiceContextGenerator.cs" />
+    <Compile Include="Services\OrganizationServiceContextGenerator.cs" />
     <Compile Include="Utils\Commands\IAsyncCommand.cs" />
     <Compile Include="Utils\Commands\NotifyTaskCompletion.cs" />
     <Compile Include="Utils\Commands\RealyAsyncCommand.cs" />

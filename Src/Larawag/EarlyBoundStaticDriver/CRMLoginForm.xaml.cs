@@ -1,4 +1,5 @@
-﻿using LINQPad.Extensibility.DataContext;
+﻿using Larawag.EarlyBoundStaticDriver.ViewModels;
+using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Tooling.CrmConnectControl;
 using System;
@@ -63,6 +64,7 @@ namespace Larawag.EarlyBoundStaticDriver
             _cxInfo = cxInfo;
             DataContext = cxInfo.CustomTypeInfo;
             InitializeComponent();
+            ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).ConnectionInfo = cxInfo;
             //// Should be used for testing only.
             //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
             //{

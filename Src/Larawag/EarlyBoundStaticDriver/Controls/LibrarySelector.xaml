@@ -5,13 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Larawag.EarlyBoundStaticDriver.Controls"
              xmlns:ViewModels="clr-namespace:Larawag.EarlyBoundStaticDriver.ViewModels"
+             xmlns:Services="clr-namespace:Larawag.Services"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.DataContext>
-        <ViewModels:LibrarySelectorViewModel/>
-    </UserControl.DataContext>
     <StackPanel>
+        <StackPanel>
+            <Label Content="{Binding CommandGenerateDll.Execution.Exception.Message}"/>
+            <Label Content="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
+        </StackPanel>
         <DockPanel>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandGenerateDll}">Generate dll</Hyperlink>
+            </Label>
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Command="{Binding CommandSelectDll}">Browse...</Hyperlink>
             </Label>

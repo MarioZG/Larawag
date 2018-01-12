@@ -73,7 +73,7 @@ namespace Larawag.Utils.Commands
             }
             catch (Exception ex)
             {
-                throw ex;
+              //  throw;
             }
             var propertyChanged = PropertyChanged;
             if (propertyChanged == null)
