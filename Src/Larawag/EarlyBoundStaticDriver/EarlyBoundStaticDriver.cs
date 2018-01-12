@@ -44,13 +44,13 @@ namespace Larawag.EarlyBoundStaticDriver
 
         private void LoginForm_ConnectionToCrmCompleted(object sender, EventArgs e)
         {
-            if (sender is CRMLoginForm)
-            {
-                ((CRMLoginForm)sender).Dispatcher.Invoke(() =>
-                {
-                    ((CRMLoginForm)sender).Close();
-                });
-            }
+            //if (sender is CRMLoginForm)
+            //{
+            //    ((CRMLoginForm)sender).Dispatcher.Invoke(() =>
+            //    {
+            //        ((CRMLoginForm)sender).Close();
+            //    });
+            //}
         }
 
         #region populate schema explorer - c&p from example

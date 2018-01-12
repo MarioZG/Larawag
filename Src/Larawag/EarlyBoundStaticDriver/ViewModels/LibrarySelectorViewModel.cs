@@ -3,6 +3,7 @@ using Larawag.Utils.Commands;
 using LINQPad.Extensibility.DataContext;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,9 +55,10 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
         private async Task<object> GenerateDllClicked(object arg)
         {
-            string fileName = ".\\ContextCode.cs";
+            string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
+            string fileName = workingDirectory+ "\\ContextCode.cs";
             await contextGenerator.GenerateCode(ConnectionInfo.DatabaseInfo.CustomCxString, fileName);
-            return await compilerService.CompileCode(fileName, "CrmContext.dll");             
+            return await compilerService.CompileCode(fileName, workingDirectory+ "\\CrmContext.dll");             
         }
     }
 }

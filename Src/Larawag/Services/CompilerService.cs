@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,12 @@ namespace Larawag.Services
 
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = false;
-            parameters.OutputAssembly = "CrmContext";
+            parameters.OutputAssembly = Path.GetDirectoryName(filename) + "\\CrmContext.dll";
+            parameters.ReferencedAssemblies.Add(Path.GetDirectoryName(filename)+"\\Microsoft.Xrm.Sdk.dll");
+            parameters.ReferencedAssemblies.Add("System.Runtime.Serialization.dll");
+            parameters.ReferencedAssemblies.Add("System.dll");
+            parameters.ReferencedAssemblies.Add("System.Core.dll");
+
             CompilerResults results = await Task.Run(() => icc.CompileAssemblyFromFile(parameters, filename));
             return results.Errors.Count == 0;
         }

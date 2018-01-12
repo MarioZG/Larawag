@@ -305,6 +305,12 @@ namespace Larawag.EarlyBoundStaticDriver
         /// </summary>
         private void ProcessSuccess()
         {
+            if (CrmConnectionMgr != null && CrmConnectionMgr.CrmSvc != null && CrmConnectionMgr.CrmSvc.IsReady)
+            {
+                _cxInfo.DatabaseInfo.CustomCxString = $"Url={CrmConnectionMgr.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication]};  Username={CrmConnectionMgr.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName}; Password={CrmConnectionMgr.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password}; AuthType={CrmConnectionMgr.CrmSvc.ActiveAuthenticationType};";
+                //return true;
+            }
+
             resetUiFlag = true;
             bIsConnectedComplete = true;
             CrmSvc = mgr.CrmSvc;

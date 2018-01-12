@@ -47,6 +47,7 @@ namespace Larawag.Services
                 }
 
                 //errror - process.ExitCode ==2
+                //ok - exitcode -== 0
 
                 tcs.SetResult(true);
                 process.Dispose();

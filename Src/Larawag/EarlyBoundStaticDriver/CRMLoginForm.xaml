@@ -15,15 +15,18 @@
         Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Microsoft.Xrm.Tooling.Ui.Styles;component/Resources/Button/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel>
-
-        <Controls:LibrarySelector x:Name="LibrarySelector" Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom" />
-
         <CrmLoginCtrl:CrmServerLoginControl Name="CrmLoginCtrl" Grid.Row="1" ShowTitle="False"  Margin="10,5" VerticalAlignment="Bottom" />
+
+        <Controls:LibrarySelector x:Name="LibrarySelector" Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom"
+                                  Visibility="{Binding Path=CrmConnectionMgr.CrmSvc.IsReady, Converter={StaticResource BoolToVis}}"
+                                  />
+
     </StackPanel>
 </Window>
