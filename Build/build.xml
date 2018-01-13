@@ -1,0 +1,147 @@
+<!--
+Doc for build
+
+default target - BUILD - does compilation and puts output to latestMaster folder
+target ReleaseLatest - builds applciation, creates folder named after version puts binairies there and zips it up
+target BuildMaster
+
+-->
+<Project ToolsVersion="14.0" DefaultTargets="BuildMaster" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)\..</RootDir>
+    <BuildDir>$(MSBuildProjectDirectory)\Bin</BuildDir>
+    <LibrariesPathFiles>$(RootDir)\packages\**\*.dll</LibrariesPathFiles>
+    <ApplicationName>Larawag</ApplicationName>
+    <Version>LatestMaster</Version>
+    <GitBranchName>master</GitBranchName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectToBuild Include="$(BuildDir)\Src\Src\$(ApplicationName)\$(ApplicationName).csproj">
+      <AdditionalProperties>OutputPath=$(BuildDir)\$(ApplicationName);AllowedReferenceRelatedFileExtensions=none;DebugSymbols=false;DebugType=None</AdditionalProperties>
+    </ProjectToBuild>
+    <!--<ProjectToBuild Include="$(BuildDir)\Src\$(ApplicationName)Tests\$(ApplicationName)Tests.csproj">
+      <AdditionalProperties>OutputPath=$(BuildDir)\$(ApplicationName)Tests</AdditionalProperties>
+    </ProjectToBuild>-->
+    <OutputFiles Include="$(BuildDir)\$(ApplicationName)\*.*" />
+    <OutputExeFile Include="$(BuildDir)\$(ApplicationName)\$(ApplicationName).dll" />
+  </ItemGroup>
+  <Target Name="BuildMaster">
+    <CallTarget Targets="Build"/>
+    <CallTarget Targets="CopyBinaries"/>
+    <!--<CallTarget Targets="ExecuteTests"/>-->
+  </Target>
+  <Target Name="ReleaseLatest">
+    <CallTarget Targets="Build"/>
+    <!--<CallTarget Targets="ExecuteTests"/>-->
+    <CallTarget Targets="UpdateVersion"/>
+    <CallTarget Targets="CopyBinaries"/>
+    <CallTarget Targets="ZipBinaries"/>
+  </Target>
+  <Target Name="Build">
+    <Message Text="MSBuildProjectDirectoryr=$(MSBuildProjectDirectory)"/>
+    <CallTarget Targets="Compile"/>
+    <Message Text="Output in $(BuildDir)"/>
+    <ItemGroup>
+      <OutputFiles Include="$(BuildDir)\$(ApplicationName)\**\*.*" />
+    </ItemGroup>
+  </Target>
+  <Target Name="PrepareOutDir">
+    <RemoveDir Directories="$(BuildDir)"/>
+    <MakeDir Directories="$(BuildDir)"/>
+  </Target>
+  <Target Name="CheckoutBranch" DependsOnTargets="PrepareOutDir">
+    <Exec Command='"C:\Program Files\Git\cmd\git.exe" clone -b $(GitBranchName) --single-branch file://$(RootDir) $(BuildDir)\Src"'/>
+  </Target>
+  <Target Name="Compile" DependsOnTargets="CheckoutBranch">
+    <Message Text="Compiling projects @(ProjectToBuild)"/>
+    <MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=Release" />
+  </Target>
+  <Target Name="ExecuteTests" DependsOnTargets="Compile">
+    <Exec Command='"c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\MSTest.exe"  /resultsfile:$(BuildDir)\tests.trx /testcontainer:$(BuildDir)\$(ApplicationName)Tests\$(ApplicationName)Tests.dll' />
+  </Target>
+  <Target Name="CopyBinaries" DependsOnTargets="Compile">
+    <!-- versiopn still should be latest master-->
+    <Message Text="Files to copy:@(OutputFiles)"/>
+    <RemoveDir Directories="$(RootDir)\Bin\$(Version)"/>
+    <MakeDir Directories="$(RootDir)\Bin\$(Version)"/>
+    <Copy SourceFiles='@(OutputFiles)' DestinationFolder='$(RootDir)\Bin\$(Version)\%(RecursiveDir)' />
+  </Target>
+  <Target Name='ZipBinaries' DependsOnTargets='CopyBinaries'>
+    <ItemGroup>
+      <OutputFilesToZip Include="$(RootDir)\Bin\$(Version)\**\*.*" />
+    </ItemGroup>
+    <Zip InputFileNames="@(OutputFilesToZip)"
+			 InputFilesRoot="$(RootDir)\Bin\$(Version)\"
+			OverwriteExistingFile="true"
+			ZIPRootFolder=""
+			OutputFileName="$(RootDir)\Bin\$(ApplicationName)_$(Version).zip" />
+    <Move SourceFiles="$(RootDir)\Bin\$(ApplicationName)_$(Version).zip" DestinationFiles="$(RootDir)\Bin\$(ApplicationName)_$(Version).lpx"/>
+  </Target>
+  <Target Name='UpdateVersion' DependsOnTargets='Compile'>
+    <Message Text="Getting version of @(OutputExeFile)"/>
+    <GetAssemblyIdentity AssemblyFiles="@(OutputExeFile)">
+      <Output TaskParameter="Assemblies" ItemName="MyAssemblyIdentities"/>
+    </GetAssemblyIdentity>
+    <CreateProperty Condition="'$([System.Version]::Parse(%(MyAssemblyIdentities.Version)).Build)' == '0'"
+						Value="$([System.Version]::Parse(%(MyAssemblyIdentities.Version)).ToString(2))">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </CreateProperty>
+    <CreateProperty Condition="'$([System.Version]::Parse(%(MyAssemblyIdentities.Version)).Build)' != '0'"
+						Value="$([System.Version]::Parse(%(MyAssemblyIdentities.Version)).ToString(3))">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </CreateProperty>
+    <Message Text="Version updated to $(Version)"/>
+  </Target>
+  <Target Name="CleanUp">
+    <RemoveDir Directories="$(BuildDir)" />
+  </Target>
+
+  <UsingTask TaskName="Zip" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <InputFileNames ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <InputFilesRoot ParameterType="System.String" Required="true" />
+      <ZIPRootFolder ParameterType="System.String" Required="false" />
+      <OutputFileName ParameterType="System.String" Required="true" />
+      <OverwriteExistingFile ParameterType="System.Boolean" Required="false" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.IO.Compression" />
+      <Using Namespace="System.IO.Compression" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[        
+        const int BufferSize = 64 * 1024;
+
+        var buffer = new byte[BufferSize];
+        var fileMode = OverwriteExistingFile ? FileMode.Create : FileMode.CreateNew;
+
+        using (var outputFileStream = new FileStream(OutputFileName, fileMode))
+        {
+          using (var archive = new ZipArchive(outputFileStream, ZipArchiveMode.Create))
+          {
+            foreach (var inputFileName in InputFileNames.Select(f => f.ItemSpec))
+            {
+			        string folder = String.Empty;
+              if(! String.IsNullOrEmpty(ZIPRootFolder)) {
+                folder = ZIPRootFolder + Path.DirectorySeparatorChar ;
+              }
+              var archiveEntry = archive.CreateEntry(folder + inputFileName.Replace(InputFilesRoot, ""));
+
+              using (var fs = new FileStream(inputFileName, FileMode.Open))
+              {
+                using (var zipStream = archiveEntry.Open())
+                {
+                  int bytesRead = -1;
+                  while ((bytesRead = fs.Read(buffer, 0, BufferSize)) > 0)
+                  {
+                    zipStream.Write(buffer, 0, bytesRead);
+                  }
+                }
+              }
+            }
+          }
+        }        
+      ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>
