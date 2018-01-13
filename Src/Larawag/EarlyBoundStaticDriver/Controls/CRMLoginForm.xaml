@@ -1,4 +1,4 @@
-﻿<Window x:Class="Larawag.EarlyBoundStaticDriver.CRMLoginForm"
+﻿<Window x:Class="Larawag.EarlyBoundStaticDriver.Controls.CRMLoginForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:CrmLoginCtrl="clr-namespace:Microsoft.Xrm.Tooling.CrmConnectControl;assembly=Microsoft.Xrm.Tooling.CrmConnectControl" 
@@ -31,6 +31,7 @@
                                                         TargetNullValue=Collapsed,
                                                         Converter={StaticResource BoolToVis}}"
                                   />
+
 
     </StackPanel>
 </Window>

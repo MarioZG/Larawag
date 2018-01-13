@@ -117,7 +117,7 @@
     <Compile Include="EarlyBoundStaticDriver\Controls\LibrarySelector.xaml.cs">
       <DependentUpon>LibrarySelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EarlyBoundStaticDriver\CRMLoginForm.xaml.cs">
+    <Compile Include="EarlyBoundStaticDriver\Controls\CRMLoginForm.xaml.cs">
       <DependentUpon>CRMLoginForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="EarlyBoundStaticDriver\EarlyBoundStaticDriver.cs" />
@@ -141,7 +141,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EarlyBoundStaticDriver\CRMLoginForm.xaml">
+    <Page Include="EarlyBoundStaticDriver\Controls\CRMLoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

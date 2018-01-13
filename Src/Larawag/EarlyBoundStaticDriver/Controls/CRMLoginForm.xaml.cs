@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Larawag.EarlyBoundStaticDriver
+namespace Larawag.EarlyBoundStaticDriver.Controls
 {
     /// <summary>
     /// Interaction logic for CRMLoginForm1.xaml

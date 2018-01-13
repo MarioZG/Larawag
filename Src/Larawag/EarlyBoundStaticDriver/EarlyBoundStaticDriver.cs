@@ -1,4 +1,5 @@
-﻿using Larawag.EarlyBoundStaticDriver.ViewModels;
+﻿using Larawag.EarlyBoundStaticDriver.Controls;
+using Larawag.EarlyBoundStaticDriver.ViewModels;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Tooling.CrmConnectControl;
