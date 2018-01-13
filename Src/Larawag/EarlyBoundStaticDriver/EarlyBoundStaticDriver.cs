@@ -81,7 +81,9 @@ namespace Larawag.EarlyBoundStaticDriver
                     ToolTipText = FormatTypeName(prop.PropertyType, false),
 
                     // Store the entity type to the Tag property. We'll use it later.
-                    Tag = ienumerableOfT.GetGenericArguments()[0]
+                    Tag = ienumerableOfT.GetGenericArguments()[0],
+
+                    DragText = prop.Name
                 }
 
             ).ToList();
@@ -110,7 +112,8 @@ namespace Larawag.EarlyBoundStaticDriver
                 {
                     HyperlinkTarget = elementTypeLookup[childProp.PropertyType].First(),
                     // FormatTypeName is a helper method that returns a nicely formatted type name.
-                    ToolTipText = FormatTypeName(childProp.PropertyType, true)
+                    ToolTipText = FormatTypeName(childProp.PropertyType, true),
+                    DragText = childProp.Name
                 };
 
             // Is the property's type a collection of entities?
@@ -122,13 +125,17 @@ namespace Larawag.EarlyBoundStaticDriver
                     return new ExplorerItem(childProp.Name, ExplorerItemKind.CollectionLink, ExplorerIcon.OneToMany)
                     {
                         HyperlinkTarget = elementTypeLookup[elementType].First(),
-                        ToolTipText = FormatTypeName(elementType, true)
+                        ToolTipText = FormatTypeName(elementType, true),
+                        DragText = childProp.Name
                     };
             }
 
             // Ordinary property:
             return new ExplorerItem(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")",
-                ExplorerItemKind.Property, ExplorerIcon.Column);
+                ExplorerItemKind.Property, ExplorerIcon.Column)
+            {
+                DragText = childProp.Name
+            };
         }
 
         #endregion
