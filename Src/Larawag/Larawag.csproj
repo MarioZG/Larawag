@@ -149,6 +149,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(SolutionDir)..\Build\DevDeploy.bat</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Debug  $(SolutionDir)..\Build\DevDeploy.bat</PostBuildEvent>
   </PropertyGroup>
 </Project>
