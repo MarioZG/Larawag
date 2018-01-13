@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Larawag.Services
 {
     public interface IOrganizationServiceContextGenerator
     {
-        Task<object> GenerateCode(string connectionString, string outFile);
+        event DataReceivedEventHandler ErrorDataReceived;
+        event DataReceivedEventHandler OutputDataReceived;
+        Task<bool> GenerateCode(string connectionString, string outFile);
     }
 }

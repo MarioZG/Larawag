@@ -24,7 +24,11 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
     {
         public LibrarySelector()
         {
-            this.DataContext = new LibrarySelectorViewModel(new OrganizationServiceContextGenerator(), new CompilerService());
+            this.DataContext = new LibrarySelectorViewModel(
+                new OrganizationServiceContextGenerator(), 
+                new CompilerService(), 
+                new ConnectionStringService(),
+                this.Dispatcher);
             InitializeComponent();
         }
     }

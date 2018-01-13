@@ -11,7 +11,7 @@ namespace Larawag.Services
 {
     public class CompilerService : ICompilerService
     {
-        public async Task<object> CompileCode(string filename, string outputFileName)
+        public async Task<bool> CompileCode(string filename, string outputFileName)
         {
             // https://support.microsoft.com/en-us/help/304655/how-to-programmatically-compile-code-using-c-compiler
             CSharpCodeProvider codeProvider = new CSharpCodeProvider();

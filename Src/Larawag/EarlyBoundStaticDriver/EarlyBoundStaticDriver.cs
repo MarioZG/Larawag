@@ -1,5 +1,6 @@
 ﻿using Larawag.EarlyBoundStaticDriver.Controls;
 using Larawag.EarlyBoundStaticDriver.ViewModels;
+using Larawag.Services;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Tooling.CrmConnectControl;
@@ -15,7 +16,9 @@ namespace Larawag.EarlyBoundStaticDriver
 {
     public class EarlyBoundDriver : StaticDataContextDriver
     {
-        private const string PasswordPrefix = "CRMDriver-";
+
+        private IConnectionStringService connectionStringService  = new ConnectionStringService();
+
 
         public override string Name { get { return "Dynamics early bound CRM Driver"; } }
 
@@ -46,7 +49,7 @@ namespace Larawag.EarlyBoundStaticDriver
                 var password = connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
                 var url = connManager.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication];
                 var authType = connManager.CrmSvc.ActiveAuthenticationType;
-                LINQPad.Util.SetPassword(PasswordPrefix + username, password);
+                connectionStringService.SetPasword(username, password);
                 cxInfo.DatabaseInfo.UserName = username;
                 cxInfo.DatabaseInfo.EncryptCustomCxString = true;
 
@@ -162,9 +165,7 @@ namespace Larawag.EarlyBoundStaticDriver
 
         public override object[] GetContextConstructorArguments(IConnectionInfo cxInfo)
         {
-            var connString = cxInfo.DatabaseInfo.CustomCxString;
-            var password = LINQPad.Util.GetPassword(PasswordPrefix+ cxInfo.DatabaseInfo.UserName);
-            connString += $" Password ={ password};";
+            var connString = connectionStringService.GetConnectionString(cxInfo);
             var connection = new CrmServiceClient(connString);
 
             return new object[] { connection };

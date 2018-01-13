@@ -3,25 +3,33 @@ using Larawag.Utils.Commands;
 using LINQPad.Extensibility.DataContext;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Larawag.EarlyBoundStaticDriver.ViewModels
 {
     public class LibrarySelectorViewModel : ViewModelBase
     {
         public ICommand CommandGenerateDll { get; private set; }
+        public ICommand CommandOpenGenerateDllLog { get; private set; }
         public ICommand CommandSelectDll { get; private set; }
         public ICommand CommandSelectClass { get; private set; }
         public ICommand CommandConfirmSettings { get; private set; }
+        public ICommand CommandCancelSettings { get; private set; }
         
 
-        IOrganizationServiceContextGenerator contextGenerator;
-        ICompilerService compilerService;
+        private IOrganizationServiceContextGenerator contextGenerator;
+        private ICompilerService compilerService;
+        private IConnectionStringService connectionStringService;
+
         public IConnectionInfo ConnectionInfo { get; set; }
+
+        public StringBuilder GeneratorOutput { get; private set; } = new StringBuilder();
 
         #region Event
         /// <summary>
@@ -31,14 +39,56 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         #endregion
 
 
-        public LibrarySelectorViewModel(IOrganizationServiceContextGenerator contextGenerator, ICompilerService compilerService)
+        public LibrarySelectorViewModel(IOrganizationServiceContextGenerator contextGenerator, ICompilerService compilerService, IConnectionStringService connectionStringService, Dispatcher dispatcher)
         {
             CommandGenerateDll =  new RealyAsyncCommand<object>(GenerateDllClicked);
             CommandSelectDll = new RealyAsyncCommand<object>(SelectDllClicked);
             CommandSelectClass = new RealyAsyncCommand<object>(SelectClassClicked);
             CommandConfirmSettings = new RealyAsyncCommand<object>(ConfirmSettingsClicked, ConfirmSettiingsCanExecute);
+            CommandOpenGenerateDllLog = new RealyAsyncCommand<object>(OpenGenerateDllLogClicked);
+            CommandCancelSettings = new RealyAsyncCommand<object>(CancelSettingsClicked);
+
             this.contextGenerator = contextGenerator;
+
+            contextGenerator.OutputDataReceived += (sender, args) =>
+            {
+                GeneratorOutput.AppendLine(args.Data);
+                dispatcher.Invoke(DispatcherPriority.Normal,
+                   new System.Action(() =>
+                   {
+                       RaisePropertyChangedEvent(nameof(GeneratorOutput));
+                   }
+                ));
+            };
+
+            contextGenerator.ErrorDataReceived += (sender, args) =>
+            {
+                GeneratorOutput.AppendLine(args.Data);
+                dispatcher.Invoke(DispatcherPriority.Normal,
+                   new System.Action(() =>
+                   {
+                       RaisePropertyChangedEvent(nameof(GeneratorOutput));
+                   }
+                ));
+            };
+
             this.compilerService = compilerService;
+            this.connectionStringService = connectionStringService;
+        }
+
+        private Task<object> CancelSettingsClicked(object arg)
+        {
+            //do nothing?
+            return ConfirmSettingsClicked(arg);
+        }
+
+        private Task<object> OpenGenerateDllLogClicked(object arg)
+        {
+            string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
+
+            Process.Start(workingDirectory + "\\CrmSvcUtil.log");
+
+            return null;
         }
 
         private Task<object> SelectDllClicked(object arg)
@@ -51,11 +101,16 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
             if (dialog.ShowDialog() == true)
             {
-                ConnectionInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
-                RaisePropertyChangedEvent(nameof(ConnectionInfo));
+                SetDllPath(dialog.FileName);
             }
 
             return null;
+        }
+
+        private void SetDllPath(string dllPath)
+        {
+            ConnectionInfo.CustomTypeInfo.CustomAssemblyPath = dllPath;
+            RaisePropertyChangedEvent(nameof(ConnectionInfo));
         }
 
         private Task<object> SelectClassClicked(object arg)
@@ -106,8 +161,21 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         {
             string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
             string fileName = workingDirectory+ "\\ContextCode.cs";
-            await contextGenerator.GenerateCode(ConnectionInfo.DatabaseInfo.CustomCxString, fileName);
-            return await compilerService.CompileCode(fileName, workingDirectory+ "\\CrmContext.dll");             
+            var connectionString = connectionStringService.GetConnectionString(ConnectionInfo);
+            bool codeGenerated = await contextGenerator.GenerateCode(connectionString, fileName);
+            if (codeGenerated)
+            {
+                bool compileDll = await compilerService.CompileCode(fileName, workingDirectory + "\\CrmContext.dll");
+                if(compileDll)
+                {
+                    SetDllPath(workingDirectory + "\\CrmContext.dll");
+                }
+                return compileDll;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private Task<object> ConfirmSettingsClicked(object arg)

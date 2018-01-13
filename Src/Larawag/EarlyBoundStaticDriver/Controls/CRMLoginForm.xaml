@@ -5,7 +5,7 @@
         xmlns:Controls="clr-namespace:Larawag.EarlyBoundStaticDriver.Controls" 
         xmlns:ViewModels="clr-namespace:Larawag.EarlyBoundStaticDriver.ViewModels"
         Title="CRM Login" Width="465" Height="471"
-        ResizeMode="NoResize" 
+        ResizeMode="CanResize" 
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None"

@@ -10,20 +10,23 @@ namespace Larawag.Services
 {
     public class OrganizationServiceContextGenerator : IOrganizationServiceContextGenerator
     {
-        public Task<object> GenerateCode(string connectionString, string outFile)
+        public event DataReceivedEventHandler ErrorDataReceived;
+        public event DataReceivedEventHandler OutputDataReceived;
+
+        public Task<bool> GenerateCode(string connectionString, string outFile)
         {
             string wd = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
             ProcessStartInfo startInfo = new ProcessStartInfo(wd+"\\CrmSvcUtil.exe")
             {
                 Arguments = $"/connectionstring:\"{connectionString}\" /out:\"{outFile}\" /servicecontextname:CrmContext",
                 UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
+             //   RedirectStandardOutput = true,
+             //   RedirectStandardError = true,
                 WorkingDirectory = wd
             };
 
             // there is no non-generic TaskCompletionSource
-                var tcs = new TaskCompletionSource<object>();
+                var tcs = new TaskCompletionSource<bool>();
 
             var process = new Process
             {
@@ -33,27 +36,35 @@ namespace Larawag.Services
 
             process.Exited += (sender, args) =>
             {
-                StringBuilder output = new StringBuilder();
-                while (!process.StandardOutput.EndOfStream)
+                if (process.ExitCode == 0)
                 {
-                    string line = process.StandardOutput.ReadLine();
-                    output.AppendLine(line);
+                    tcs.SetResult(true);
                 }
-                output.AppendLine("ERRORS:");
-                while (!process.StandardError.EndOfStream)
+                else
                 {
-                    string line = process.StandardError.ReadLine();
-                    output.AppendLine(line);
+                    tcs.SetResult(false);
                 }
-
-                //errror - process.ExitCode ==2
-                //ok - exitcode -== 0
-
-                tcs.SetResult(true);
+              
                 process.Dispose();
             };
 
+            //process.OutputDataReceived += (sender, args) =>
+            //{
+            //    OutputDataReceived?.Invoke(sender, args);
+            //};
+
+            //process.ErrorDataReceived += (sender, args) =>
+            //{
+            //    ErrorDataReceived?.Invoke(sender, args);
+            //};
+
             process.Start();
+
+            //process.BeginOutputReadLine();
+            //process.BeginErrorReadLine();
+
+            //tcs.SetResult(true);
+
 
             return tcs.Task;
         }

@@ -8,11 +8,50 @@
              xmlns:Services="clr-namespace:Larawag.Services"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <StackPanel>
-        <StackPanel>
+        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsNotCompleted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <Label Content="Running"/>
+            <Label Content="{Binding CommandGenerateDll.Execution.Status}"/>
+            <Label Content="{Binding CommandGenerateDll.Execution.IsCompleted}"/>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
+        </StackPanel>
+        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsSuccessfullyCompleted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <Label Content="Finished OK"/>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
+        </StackPanel>
+        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsFaulted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <Label Content="Finished with error"/>
             <Label Content="{Binding CommandGenerateDll.Execution.Exception.Message}"/>
             <Label Content="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
+            <Label Content="{Binding CommandGenerateDll.Execution.Status}"/>
+            <Label Content="{Binding CommandGenerateDll.Execution.IsCompleted}"/>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
         </StackPanel>
+        
+        <!--<TextBlock Text="{Binding GeneratorOutput}" />-->
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Command="{Binding CommandGenerateDll}">Generate dll</Hyperlink>
@@ -35,6 +74,7 @@
         <TextBox Name="txtTypeName" Margin="0,0,0,6" Text="{Binding ConnectionInfo.CustomTypeInfo.CustomTypeName}"/>
         <StackPanel>
             <Button Content="All done" Command="{Binding CommandConfirmSettings}"/>
+            <Button Content="Cancel" Command="{Binding CommandCancelSettings}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
