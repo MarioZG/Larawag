@@ -14,6 +14,8 @@ namespace Larawag.EarlyBoundStaticDriver
 {
     public class EarlyBoundDriver : StaticDataContextDriver
     {
+        private const string PasswordPrefix = "CRMDriver-";
+
         public override string Name { get { return "Dynamics early bound CRM Driver"; } }
 
         public override string Author { get { return "https://github.com/MarioZG"; } }
@@ -33,11 +35,21 @@ namespace Larawag.EarlyBoundStaticDriver
             loginForm.ContextClassSelectionCompleted += LoginForm_ContextClassSelectionCompleted;
             loginForm.ShowDialog();
 
+            LINQPad.Util.GetPassword("test");
+
             CrmConnectionManager connManager = loginForm.CrmConnectionMgr;
 
             if (connManager != null && connManager.CrmSvc != null && connManager.CrmSvc.IsReady)
             {
-                cxInfo.DatabaseInfo.CustomCxString = $"Url={connManager.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication]};  Username={connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName}; Password={connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password}; AuthType={connManager.CrmSvc.ActiveAuthenticationType};";
+                var username = connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName;
+                var password = connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
+                var url = connManager.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication];
+                var authType = connManager.CrmSvc.ActiveAuthenticationType;
+                LINQPad.Util.SetPassword(PasswordPrefix + username, password);
+                cxInfo.DatabaseInfo.UserName = username;
+                cxInfo.DatabaseInfo.EncryptCustomCxString = true;
+
+                cxInfo.DatabaseInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={authType};";
                 return true;
             }
             else
@@ -150,6 +162,8 @@ namespace Larawag.EarlyBoundStaticDriver
         public override object[] GetContextConstructorArguments(IConnectionInfo cxInfo)
         {
             var connString = cxInfo.DatabaseInfo.CustomCxString;
+            var password = LINQPad.Util.GetPassword(PasswordPrefix+ cxInfo.DatabaseInfo.UserName);
+            connString += $" Password ={ password};";
             var connection = new CrmServiceClient(connString);
 
             return new object[] { connection };
