@@ -1,5 +1,7 @@
-﻿using LINQPad.Extensibility.DataContext;
+﻿using Larawag.EarlyBoundStaticDriver.ViewModels;
+using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
+using Microsoft.Xrm.Tooling.CrmConnectControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +30,14 @@ namespace Larawag.EarlyBoundStaticDriver
         public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
         {
             CRMLoginForm loginForm = new CRMLoginForm(cxInfo);
-            loginForm.ConnectionToCrmCompleted += LoginForm_ConnectionToCrmCompleted;
+            loginForm.ContextClassSelectionCompleted += LoginForm_ContextClassSelectionCompleted;
             loginForm.ShowDialog();
 
-            if (loginForm.CrmConnectionMgr != null && loginForm.CrmConnectionMgr.CrmSvc != null && loginForm.CrmConnectionMgr.CrmSvc.IsReady)
+            CrmConnectionManager connManager = loginForm.CrmConnectionMgr;
+
+            if (connManager != null && connManager.CrmSvc != null && connManager.CrmSvc.IsReady)
             {
-                cxInfo.DatabaseInfo.CustomCxString = $"Url={loginForm.CrmConnectionMgr.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication]};  Username={loginForm.CrmConnectionMgr.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName}; Password={loginForm.CrmConnectionMgr.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password}; AuthType={loginForm.CrmConnectionMgr.CrmSvc.ActiveAuthenticationType};";
+                cxInfo.DatabaseInfo.CustomCxString = $"Url={connManager.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication]};  Username={connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName}; Password={connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password}; AuthType={connManager.CrmSvc.ActiveAuthenticationType};";
                 return true;
             }
             else
@@ -42,15 +46,15 @@ namespace Larawag.EarlyBoundStaticDriver
             }
         }
 
-        private void LoginForm_ConnectionToCrmCompleted(object sender, EventArgs e)
+        private void LoginForm_ContextClassSelectionCompleted(object sender, EventArgs e)
         {
-            //if (sender is CRMLoginForm)
-            //{
-            //    ((CRMLoginForm)sender).Dispatcher.Invoke(() =>
-            //    {
-            //        ((CRMLoginForm)sender).Close();
-            //    });
-            //}
+            if (sender is CRMLoginForm)
+            {
+                ((CRMLoginForm)sender).Dispatcher.Invoke(() =>
+                {
+                    ((CRMLoginForm)sender).Close();
+                });
+            }
         }
 
         #region populate schema explorer - c&p from example

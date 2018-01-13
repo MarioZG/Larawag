@@ -23,15 +23,18 @@
             <Label Padding="0,0,0,1">Path to custom assembly:</Label>
         </DockPanel>
 
-        <TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.CustomAssemblyPath}"/>
+        <TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding ConnectionInfo.CustomTypeInfo.CustomAssemblyPath}"/>
 
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink>Choose...</Hyperlink>
+                <Hyperlink Command="{Binding CommandSelectClass}">Choose...</Hyperlink>
             </Label>
             <Label Padding="0,0,0,1">Full name of custom type:</Label>
         </DockPanel>
 
-        <TextBox Name="txtTypeName" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.CustomTypeName}"/>
+        <TextBox Name="txtTypeName" Margin="0,0,0,6" Text="{Binding ConnectionInfo.CustomTypeInfo.CustomTypeName}"/>
+        <StackPanel>
+            <Button Content="All done" Command="{Binding CommandConfirmSettings}"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

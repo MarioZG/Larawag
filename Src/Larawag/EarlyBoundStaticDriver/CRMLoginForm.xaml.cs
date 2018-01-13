@@ -55,7 +55,7 @@ namespace Larawag.EarlyBoundStaticDriver
         /// <summary>
         /// Raised when a connection to CRM has completed. 
         /// </summary>
-        public event EventHandler ConnectionToCrmCompleted;
+        public event EventHandler ContextClassSelectionCompleted;
         #endregion
 
 
@@ -65,6 +65,8 @@ namespace Larawag.EarlyBoundStaticDriver
             DataContext = cxInfo.CustomTypeInfo;
             InitializeComponent();
             ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).ConnectionInfo = cxInfo;
+            ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).SetupCompleted += CRMLoginForm_SetupCompleted; ;
+
             //// Should be used for testing only.
             //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
             //{
@@ -74,59 +76,6 @@ namespace Larawag.EarlyBoundStaticDriver
         }
 
         IConnectionInfo _cxInfo;
-
-        void BrowseAssembly(object sender, RoutedEventArgs e)
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog()
-            {
-                Title = "Choose custom assembly",
-                DefaultExt = ".dll",
-            };
-
-            if (dialog.ShowDialog() == true)
-                _cxInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
-        }
-
-
-
-        void ChooseType(object sender, RoutedEventArgs e)
-        {
-            string assemPath = _cxInfo.CustomTypeInfo.CustomAssemblyPath;
-            if (assemPath.Length == 0)
-            {
-                MessageBox.Show("First enter a path to an assembly.");
-                return;
-            }
-
-            if (!File.Exists(assemPath))
-            {
-                MessageBox.Show("File '" + assemPath + "' does not exist.");
-                return;
-            }
-
-            string[] customTypes;
-            try
-            {
-                // TODO: In a real-world driver, call the method accepting a base type instead (unless you're.
-                // working with a POCO ORM). For instance: GetCustomTypesInAssembly ("System.Data.Linq.DataContext")
-                // You can put interfaces in here, too.
-                customTypes = _cxInfo.CustomTypeInfo.GetCustomTypesInAssembly("Microsoft.Xrm.Sdk.Client.OrganizationServiceContext");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error obtaining custom types: " + ex.Message);
-                return;
-            }
-            if (customTypes.Length == 0)
-            {
-                MessageBox.Show("There are no public types in that assembly.");  // based on.........
-                return;
-            }
-
-            string result = (string)LINQPad.Extensibility.DataContext.UI.Dialogs.PickFromList("Choose Custom Type", customTypes);
-            if (result != null) _cxInfo.CustomTypeInfo.CustomTypeName = result;
-        }
-
 
         /// <summary>
         /// Raised when the window loads for the first time. 
@@ -305,12 +254,6 @@ namespace Larawag.EarlyBoundStaticDriver
         /// </summary>
         private void ProcessSuccess()
         {
-            if (CrmConnectionMgr != null && CrmConnectionMgr.CrmSvc != null && CrmConnectionMgr.CrmSvc.IsReady)
-            {
-                _cxInfo.DatabaseInfo.CustomCxString = $"Url={CrmConnectionMgr.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication]};  Username={CrmConnectionMgr.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName}; Password={CrmConnectionMgr.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password}; AuthType={CrmConnectionMgr.CrmSvc.ActiveAuthenticationType};";
-                //return true;
-            }
-
             resetUiFlag = true;
             bIsConnectedComplete = true;
             CrmSvc = mgr.CrmSvc;
@@ -323,11 +266,21 @@ namespace Larawag.EarlyBoundStaticDriver
                }
                 ));
 
-            // Notify Caller that we are done with success. 
-            if (ConnectionToCrmCompleted != null)
-                ConnectionToCrmCompleted(this, null);
+            //lame but works!
+            CrmLoginCtrl.Visibility = Visibility.Collapsed;
+            LibrarySelector.Visibility = Visibility.Visible;
+
+            //// Notify Caller that we are done with success. 
+            //if (ContextClassSelectionCompleted != null)
+            //    ContextClassSelectionCompleted(this, null);
 
             resetUiFlag = false;
+        }
+
+        private void CRMLoginForm_SetupCompleted(object sender, EventArgs e)
+        {
+            if (ContextClassSelectionCompleted != null)
+                ContextClassSelectionCompleted(this, null);
         }
 
     }

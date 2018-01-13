@@ -25,7 +25,11 @@
         <CrmLoginCtrl:CrmServerLoginControl Name="CrmLoginCtrl" Grid.Row="1" ShowTitle="False"  Margin="10,5" VerticalAlignment="Bottom" />
 
         <Controls:LibrarySelector x:Name="LibrarySelector" Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom"
-                                  Visibility="{Binding Path=CrmConnectionMgr.CrmSvc.IsReady, Converter={StaticResource BoolToVis}}"
+                                  Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window},
+                                                        Path=CrmConnectionMgr.CrmSvc.IsReady, 
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
                                   />
 
     </StackPanel>
