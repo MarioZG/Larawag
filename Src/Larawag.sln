@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Larawag", "Larawag\Larawag.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{FAD5E2A0-2598-4495-A6DF-EA886A681F21}"
 	ProjectSection(SolutionItems) = preProject
+		..\Build\build.xml = ..\Build\build.xml
 		..\Build\DevDeploy.bat = ..\Build\DevDeploy.bat
 		..\Build\header.xml = ..\Build\header.xml
 	EndProjectSection

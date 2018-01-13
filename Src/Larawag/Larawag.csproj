@@ -158,6 +158,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Debug  $(SolutionDir)..\Build\DevDeploy.bat</PostBuildEvent>
+    <PostBuildEvent>for /D %25%25D in ($(ProjectDir)..\packages\Microsoft.CrmSdk.CoreTools.*) do xcopy /i/y "%25%25~D\content\bin\coretools\CrmSvcUtil.*" $(TargetDir)
+if $(ConfigurationName) == Debug  $(ProjectDir)..\..\Build\DevDeploy.bat
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
