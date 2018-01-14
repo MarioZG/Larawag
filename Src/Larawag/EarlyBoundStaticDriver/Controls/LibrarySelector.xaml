@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Larawag.EarlyBoundStaticDriver.Controls"
              xmlns:ViewModels="clr-namespace:Larawag.EarlyBoundStaticDriver.ViewModels"
              xmlns:Services="clr-namespace:Larawag.Services"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -14,43 +15,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsNotCompleted,
-                                                        FallbackValue=Collapsed,
-                                                        TargetNullValue=Collapsed,
-                                                        Converter={StaticResource BoolToVis}}"
-                                           >
-            <Label Content="Running"/>
-            <Label Content="{Binding CommandGenerateDll.Execution.Status}"/>
-            <Label Content="{Binding CommandGenerateDll.Execution.IsCompleted}"/>
-            <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
-            </Label>
-        </StackPanel>
-        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsSuccessfullyCompleted,
-                                                        FallbackValue=Collapsed,
-                                                        TargetNullValue=Collapsed,
-                                                        Converter={StaticResource BoolToVis}}"
-                                           >
-            <Label Content="Finished OK"/>
-            <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
-            </Label>
-        </StackPanel>
-        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsFaulted,
-                                                        FallbackValue=Collapsed,
-                                                        TargetNullValue=Collapsed,
-                                                        Converter={StaticResource BoolToVis}}"
-                                           >
-            <Label Content="Finished with error"/>
-            <Label Content="{Binding CommandGenerateDll.Execution.Exception.Message}"/>
-            <Label Content="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
-            <Label Content="{Binding CommandGenerateDll.Execution.Status}"/>
-            <Label Content="{Binding CommandGenerateDll.Execution.IsCompleted}"/>
-            <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
-            </Label>
-        </StackPanel>
-        
         <!--<TextBlock Text="{Binding GeneratorOutput}" />-->
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
@@ -63,6 +27,51 @@
         </DockPanel>
 
         <TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding ConnectionInfo.CustomTypeInfo.CustomAssemblyPath}"/>
+        
+
+        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsNotCompleted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <StackPanel Orientation="Horizontal">
+                <fa:ImageAwesome Icon="Cog" Spin="True" Width="16" Margin="0,0,10,0"  Height="16"/>
+                <Label Content="Generating early bound assembly"/>
+            </StackPanel>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
+        </StackPanel>
+        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsSuccessfullyCompleted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <StackPanel Orientation="Horizontal">
+                <fa:ImageAwesome Icon="Check" Width="16"  Height="16"/>
+                <Label Content="Finished succesfully"/>
+            </StackPanel>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
+        </StackPanel>
+        <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsFaulted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <StackPanel Orientation="Horizontal">
+                <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
+                <Label Content="Error occured"/>
+            </StackPanel>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
+            <Label Content="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
+            </Label>
+        </StackPanel>
 
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
