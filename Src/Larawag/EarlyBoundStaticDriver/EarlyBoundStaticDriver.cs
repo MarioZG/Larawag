@@ -37,9 +37,7 @@ namespace Larawag.EarlyBoundStaticDriver
         {
             CRMLoginForm loginForm = new CRMLoginForm(cxInfo);
             loginForm.ContextClassSelectionCompleted += LoginForm_ContextClassSelectionCompleted;
-            loginForm.ShowDialog();
-
-            LINQPad.Util.GetPassword("test");
+            loginForm.ShowDialog();           
 
             CrmConnectionManager connManager = loginForm.CrmConnectionMgr;
 

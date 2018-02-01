@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -74,6 +75,19 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
             this.compilerService = compilerService;
             this.connectionStringService = connectionStringService;
+
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+        }
+
+        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name.StartsWith("Microsoft.Xrm.Sdk,"))
+            {
+                var assembly = Assembly.LoadFrom("Microsoft.Xrm.Sdk.dll");
+                return assembly;
+            }
+            return null;
         }
 
         private Task<object> CancelSettingsClicked(object arg)
@@ -110,7 +124,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         private void SetDllPath(string dllPath)
         {
             ConnectionInfo.CustomTypeInfo.CustomAssemblyPath = dllPath;
-            RaisePropertyChangedEvent(nameof(ConnectionInfo));
+                RaisePropertyChangedEvent(nameof(ConnectionInfo));
         }
 
         private Task<object> SelectClassClicked(object arg)
@@ -134,16 +148,22 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
                 // TODO: In a real-world driver, call the method accepting a base type instead (unless you're.
                 // working with a POCO ORM). For instance: GetCustomTypesInAssembly ("System.Data.Linq.DataContext")
                 // You can put interfaces in here, too.
-                customTypes = ConnectionInfo.CustomTypeInfo.GetCustomTypesInAssembly("Microsoft.Xrm.Sdk.Client.OrganizationServiceContext");
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+                Assembly a = Assembly.LoadFrom(ConnectionInfo.CustomTypeInfo.CustomAssemblyPath);
+                var types = a.ExportedTypes.Where(t => t?.BaseType?.FullName == "Microsoft.Xrm.Sdk.Client.OrganizationServiceContext");
+
+                customTypes = types.Select(t => t.FullName).ToArray();
+               // customTypes = ConnectionInfo.CustomTypeInfo.GetCustomTypesInAssembly("Microsoft.Xrm.Sdk.Client.OrganizationServiceContext");
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("Error obtaining custom types: " + ex.Message);
+                System.Windows.MessageBox.Show("Error obtaining custom types: " + ex.Message);
                 return null;
             }
             if (customTypes.Length == 0)
             {
-                //MessageBox.Show("There are no public types in that assembly.");  // based on.........
+                System.Windows.MessageBox.Show("There are no public types in that assembly.");  // based on.........
                 return null;
             }
 
