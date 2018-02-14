@@ -1,4 +1,5 @@
 ﻿using Larawag.Services;
+using Larawag.Utils;
 using Larawag.Utils.Commands;
 using LINQPad.Extensibility.DataContext;
 using System;
@@ -75,20 +76,9 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
             this.compilerService = compilerService;
             this.connectionStringService = connectionStringService;
-
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
         }
 
-        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            if (args.Name.StartsWith("Microsoft.Xrm.Sdk,"))
-            {
-                var assembly = Assembly.LoadFrom("Microsoft.Xrm.Sdk.dll");
-                return assembly;
-            }
-            return null;
-        }
+
 
         private Task<object> CancelSettingsClicked(object arg)
         {
@@ -127,44 +117,42 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
                 RaisePropertyChangedEvent(nameof(ConnectionInfo));
         }
 
-        private Task<object> SelectClassClicked(object arg)
+        private async Task<object> SelectClassClicked(object arg)
         {
+            var tcs = new TaskCompletionSource<object>();
             string assemPath = ConnectionInfo.CustomTypeInfo.CustomAssemblyPath;
             if (assemPath.Length == 0)
             {
-                //MessageBox.Show("First enter a path to an assembly.");
-                return null;
+                tcs.SetException(new ArgumentException("Missing assembly path."));
+                return tcs.Task;
             }
 
             if (!File.Exists(assemPath))
             {
-                //MessageBox.Show("File '" + assemPath + "' does not exist.");
-                return null;
+                tcs.SetException(new ArgumentException($"Assembly {assemPath} does not exist."));
+                return tcs.Task;
             }
 
             string[] customTypes;
             try
             {
-                // TODO: In a real-world driver, call the method accepting a base type instead (unless you're.
-                // working with a POCO ORM). For instance: GetCustomTypesInAssembly ("System.Data.Linq.DataContext")
-                // You can put interfaces in here, too.
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-                Assembly a = Assembly.LoadFrom(ConnectionInfo.CustomTypeInfo.CustomAssemblyPath);
-                var types = a.ExportedTypes.Where(t => t?.BaseType?.FullName == "Microsoft.Xrm.Sdk.Client.OrganizationServiceContext");
+                Func<Type, bool> predicate = t => t?.BaseType?.FullName == "Microsoft.Xrm.Sdk.Client.OrganizationServiceContext";
+                var types = AssemblyLoader.GetTypesFromAssembly(
+                    ConnectionInfo.CustomTypeInfo.CustomAssemblyPath, 
+                    predicate);
 
                 customTypes = types.Select(t => t.FullName).ToArray();
-               // customTypes = ConnectionInfo.CustomTypeInfo.GetCustomTypesInAssembly("Microsoft.Xrm.Sdk.Client.OrganizationServiceContext");
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Error obtaining custom types: " + ex.Message);
-                return null;
+                tcs.SetException(new ArgumentException("Error obtaining custom types: " + ex.Message));
+                return tcs.Task;
             }
             if (customTypes.Length == 0)
             {
                 System.Windows.MessageBox.Show("There are no public types in that assembly.");  // based on.........
-                return null;
+                tcs.SetException(new ArgumentException("There are no public types in that assembly."));
+                return tcs.Task;
             }
 
             string result = (string)LINQPad.Extensibility.DataContext.UI.Dialogs.PickFromList("Choose Custom Type", customTypes);
@@ -172,9 +160,8 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             {
                 ConnectionInfo.CustomTypeInfo.CustomTypeName = result;
                 RaisePropertyChangedEvent(nameof(ConnectionInfo));
-
             }
-            return null;
+            return tcs.Task;
         }
 
         private async Task<object> GenerateDllClicked(object arg)

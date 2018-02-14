@@ -73,6 +73,18 @@
             </Label>
         </StackPanel>
 
+        <StackPanel Visibility="{Binding CommandSelectClass.Execution.IsFaulted,
+                                                        FallbackValue=Collapsed,
+                                                        TargetNullValue=Collapsed,
+                                                        Converter={StaticResource BoolToVis}}"
+                                           >
+            <StackPanel Orientation="Horizontal">
+                <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
+                <Label Content="Error occured"/>
+            </StackPanel>
+            <Label Content="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
+        </StackPanel>
+
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Command="{Binding CommandSelectClass}">Choose...</Hyperlink>
