@@ -139,11 +139,13 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             try
             {
                 Func<Type, bool> predicate = t => t?.BaseType?.FullName == "Microsoft.Xrm.Sdk.Client.OrganizationServiceContext";
+                Func<Type, object> selector = t => t.FullName;
                 var types = AssemblyLoader.GetTypesFromAssembly(
                     ConnectionInfo.CustomTypeInfo.CustomAssemblyPath, 
-                    predicate);
+                    predicate,
+                    selector);
 
-                customTypes = types.Select(t => t.FullName).ToArray();
+                customTypes = types.Cast<string>().ToArray();
             }
             catch (Exception ex)
             {
