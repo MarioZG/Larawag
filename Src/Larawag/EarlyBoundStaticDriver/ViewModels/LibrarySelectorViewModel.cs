@@ -29,7 +29,12 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         private ICompilerService compilerService;
         private IConnectionStringService connectionStringService;
 
-        public IConnectionInfo ConnectionInfo { get; set; }
+        private IConnectionInfo connectionInfo;
+        public IConnectionInfo ConnectionInfo
+        {
+            get { return connectionInfo; }
+            set { base.SetProperty<IConnectionInfo>(ref connectionInfo, value); }
+        }
 
         public StringBuilder GeneratorOutput { get; private set; } = new StringBuilder();
 
@@ -44,11 +49,11 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         public LibrarySelectorViewModel(IOrganizationServiceContextGenerator contextGenerator, ICompilerService compilerService, IConnectionStringService connectionStringService, Dispatcher dispatcher)
         {
             CommandGenerateDll =  new RealyAsyncCommand<object>(GenerateDllClicked);
-            CommandSelectDll = new RealyAsyncCommand<object>(SelectDllClicked);
-            CommandSelectClass = new RealyAsyncCommand<object>(SelectClassClicked);
-            CommandConfirmSettings = new RealyAsyncCommand<object>(ConfirmSettingsClicked, ConfirmSettiingsCanExecute);
-            CommandOpenGenerateDllLog = new RealyAsyncCommand<object>(OpenGenerateDllLogClicked);
-            CommandCancelSettings = new RealyAsyncCommand<object>(CancelSettingsClicked);
+            CommandSelectDll = new RelayCommand(SelectDllClicked);
+            CommandSelectClass = new RealyAsyncCommand<object>(SelectClassClicked, CanSelectClassClicked);
+            CommandConfirmSettings = new RelayCommand(ConfirmSettingsClicked, ConfirmSettiingsCanExecute);
+            CommandOpenGenerateDllLog = new RelayCommand(OpenGenerateDllLogClicked);
+            CommandCancelSettings = new RelayCommand(CancelSettingsClicked);
 
             this.contextGenerator = contextGenerator;
 
@@ -78,24 +83,20 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             this.connectionStringService = connectionStringService;
         }
 
-
-
-        private Task<object> CancelSettingsClicked(object arg)
+        private void CancelSettingsClicked(object arg)
         {
             //do nothing?
-            return ConfirmSettingsClicked(arg);
+            ConfirmSettingsClicked(arg);
         }
 
-        private Task<object> OpenGenerateDllLogClicked(object arg)
+        private void OpenGenerateDllLogClicked(object arg)
         {
             string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
 
             Process.Start(workingDirectory + "\\CrmSvcUtil.log");
-
-            return null;
         }
 
-        private Task<object> SelectDllClicked(object arg)
+        private void SelectDllClicked(object arg)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog()
             {
@@ -107,14 +108,17 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             {
                 SetDllPath(dialog.FileName);
             }
-
-            return null;
         }
 
         private void SetDllPath(string dllPath)
         {
             ConnectionInfo.CustomTypeInfo.CustomAssemblyPath = dllPath;
-                RaisePropertyChangedEvent(nameof(ConnectionInfo));
+            RaisePropertyChangedEvent(nameof(ConnectionInfo));
+        }
+
+        private bool CanSelectClassClicked(object arg)
+        {
+            return !String.IsNullOrWhiteSpace(ConnectionInfo?.CustomTypeInfo?.CustomAssemblyPath);
         }
 
         private async Task<object> SelectClassClicked(object arg)
@@ -123,17 +127,15 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             string assemPath = ConnectionInfo.CustomTypeInfo.CustomAssemblyPath;
             if (assemPath.Length == 0)
             {
-                tcs.SetException(new ArgumentException("Missing assembly path."));
-                return tcs.Task;
+                await Task.Run(async() => { throw new ArgumentException("Missing assembly path."); }); 
             }
 
             if (!File.Exists(assemPath))
             {
-                tcs.SetException(new ArgumentException($"Assembly {assemPath} does not exist."));
-                return tcs.Task;
+                await Task.Run(async () => { throw new ArgumentException($"Assembly {assemPath} does not exist."); });
             }
 
-            string[] customTypes;
+            string[] customTypes = null;
             try
             {
                 Func<Type, bool> predicate = t => t?.BaseType?.FullName == "Microsoft.Xrm.Sdk.Client.OrganizationServiceContext";
@@ -145,13 +147,12 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             }
             catch (Exception ex)
             {
-                tcs.SetException(new ArgumentException("Error obtaining custom types: " + ex.Message));
-                return tcs.Task;
+                await Task.Run(async () => { throw new Exception("Error obtaining custom types: " + ex.Message); });
             }
             if (customTypes.Length == 0)
             {
                 System.Windows.MessageBox.Show("There are no public types in that assembly.");  // based on.........
-                tcs.SetException(new ArgumentException("There are no public types in that assembly."));
+                await Task.Run(async () => { throw new Exception("There are no public types in that assembly."); });
                 return tcs.Task;
             }
 
@@ -177,21 +178,24 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
                 {
                     SetDllPath(workingDirectory + "\\CrmContext.dll");
                 }
-                return compileDll;
+                else
+                {
+                    await Task.Run(async () => { throw new Exception("Error while compiling code."); });
+                }
             }
             else
             {
-                return false;
+                await Task.Run(async () => { throw new Exception("Error while generating code."); });
             }
+            return null;
         }
 
-        private Task<object> ConfirmSettingsClicked(object arg)
+        private void ConfirmSettingsClicked(object arg)
         {
             if(SetupCompleted != null)
             {
                 SetupCompleted(this, null);
             }
-            return null;
         }
 
         private bool ConfirmSettiingsCanExecute(object arg)

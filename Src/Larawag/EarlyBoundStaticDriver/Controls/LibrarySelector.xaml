@@ -72,7 +72,8 @@
                 <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
             </Label>
         </StackPanel>
-
+        
+        
         <StackPanel Visibility="{Binding CommandSelectClass.Execution.IsFaulted,
                                                         FallbackValue=Collapsed,
                                                         TargetNullValue=Collapsed,
@@ -80,9 +81,9 @@
                                            >
             <StackPanel Orientation="Horizontal">
                 <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
-                <Label Content="Error occured"/>
+                <Label Content="Error occured: "/>
+                <Label Content="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
             </StackPanel>
-            <Label Content="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
         </StackPanel>
 
         <DockPanel>

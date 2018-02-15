@@ -142,6 +142,7 @@
     <Compile Include="Utils\Commands\IAsyncCommand.cs" />
     <Compile Include="Utils\Commands\NotifyTaskCompletion.cs" />
     <Compile Include="Utils\Commands\RealyAsyncCommand.cs" />
+    <Compile Include="Utils\Commands\RelayCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Larawag.snk" />

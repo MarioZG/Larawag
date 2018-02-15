@@ -55,7 +55,7 @@ namespace Larawag.Utils.Commands
         public NotifyTaskCompletion(Task<TResult> task)
         {
             Task = task;
-            // if (!task.IsCompleted)
+            if (task!= null && !task.IsCompleted)
             {
                 TaskCompletion = WatchTaskAsync(task);
             }
