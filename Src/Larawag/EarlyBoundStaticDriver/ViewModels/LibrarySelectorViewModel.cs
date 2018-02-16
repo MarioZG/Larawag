@@ -19,11 +19,13 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
     {
         public ICommand CommandGenerateDll { get; private set; }
         public ICommand CommandOpenGenerateDllLog { get; private set; }
+        public ICommand CommandOpenCompileDllLog { get; private set; }
         public ICommand CommandSelectDll { get; private set; }
         public ICommand CommandSelectClass { get; private set; }
         public ICommand CommandConfirmSettings { get; private set; }
         public ICommand CommandCancelSettings { get; private set; }
-        
+
+        private const string compilationLogFilename = "Compilationlog.txt";
 
         private IOrganizationServiceContextGenerator contextGenerator;
         private ICompilerService compilerService;
@@ -53,6 +55,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             CommandSelectClass = new RealyAsyncCommand<object>(SelectClassClicked, CanSelectClassClicked);
             CommandConfirmSettings = new RelayCommand(ConfirmSettingsClicked, ConfirmSettiingsCanExecute);
             CommandOpenGenerateDllLog = new RelayCommand(OpenGenerateDllLogClicked);
+            CommandOpenCompileDllLog = new RelayCommand(OpenCompileDllLog);
             CommandCancelSettings = new RelayCommand(CancelSettingsClicked);
 
             this.contextGenerator = contextGenerator;
@@ -81,6 +84,13 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
             this.compilerService = compilerService;
             this.connectionStringService = connectionStringService;
+        }
+
+        private void OpenCompileDllLog(object obj)
+        {
+            string workingDirectory = contextGenerator.GetWorkingFolder(ConnectionInfo.DatabaseInfo);
+
+            Process.Start(Path.Combine(workingDirectory, compilationLogFilename));
         }
 
         private void CancelSettingsClicked(object arg)
@@ -176,10 +186,8 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             {
                 await Task.Run(async () => { throw new Exception("Missing connection server."); });
             }
-            string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
-            string hostname = new Uri(ConnectionInfo.DatabaseInfo.Server).Host;
-            workingDirectory = Path.Combine(workingDirectory, hostname);
-            if(! Directory.Exists(workingDirectory))
+            string workingDirectory = contextGenerator.GetWorkingFolder(ConnectionInfo.DatabaseInfo);
+            if (! Directory.Exists(workingDirectory))
             {
                 Directory.CreateDirectory(workingDirectory);
             }
@@ -188,8 +196,10 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             bool codeGenerated = await contextGenerator.GenerateCode(connectionString, fileName);
             if (codeGenerated)
             {
+                var hostname = new Uri(ConnectionInfo.DatabaseInfo.Server).Host;
                 var dllPath = Path.Combine(workingDirectory, hostname+ ".dll");
-                var compilationErrors = await compilerService.CompileCode(fileName, dllPath, "");
+                var logFile = Path.Combine(workingDirectory, compilationLogFilename);
+                var compilationErrors = await compilerService.CompileCode(fileName, dllPath, logFile);
                 if(compilationErrors.Count == 0)
                 {
                     SetDllPath(dllPath);

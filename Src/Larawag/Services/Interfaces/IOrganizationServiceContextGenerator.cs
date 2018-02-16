@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using LINQPad.Extensibility.DataContext;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Larawag.Services
@@ -8,5 +9,6 @@ namespace Larawag.Services
         event DataReceivedEventHandler ErrorDataReceived;
         event DataReceivedEventHandler OutputDataReceived;
         Task<bool> GenerateCode(string connectionString, string outFile);
+        string GetWorkingFolder(IDatabaseInfo dbInfo);
     }
 }

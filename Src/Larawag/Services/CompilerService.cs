@@ -11,7 +11,7 @@ namespace Larawag.Services
 {
     public class CompilerService : ICompilerService
     {
-        public async Task<CompilerErrorCollection> CompileCode(string filename, string outputFileName, string sdkDllPath)
+        public async Task<CompilerErrorCollection> CompileCode(string filename, string outputFileName, string logFile)
         {
             // https://support.microsoft.com/en-us/help/304655/how-to-programmatically-compile-code-using-c-compiler
             CSharpCodeProvider codeProvider = new CSharpCodeProvider();
@@ -22,23 +22,23 @@ namespace Larawag.Services
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = false;
             parameters.OutputAssembly = outputFileName;
-            parameters.ReferencedAssemblies.Add(Path.Combine(sdkDllPath, "Microsoft.Xrm.Sdk.dll"));
+            parameters.ReferencedAssemblies.Add(Path.Combine(Path.GetDirectoryName(outputFileName), "..\\Microsoft.Xrm.Sdk.dll"));
             parameters.ReferencedAssemblies.Add("System.Runtime.Serialization.dll");
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("System.Core.dll");
 
             CompilerResults results = await Task.Run(() => icc.CompileAssemblyFromFile(parameters, filename));
 
-            SaveCompilationLog(filename, results);
+            SaveCompilationLog(filename, results, logFile);
 
             return results.Errors;
         }
 
-        private static void SaveCompilationLog(string filename, CompilerResults results)
+        private static void SaveCompilationLog(string filename, CompilerResults results, string logFile)
         {
             var strArray = new string[results.Output.Count];
             results.Output.CopyTo(strArray, 0);
-            File.WriteAllLines(Path.Combine(Path.GetDirectoryName(filename), "Compilationlog.txt"), strArray);
+            File.WriteAllLines(logFile, strArray);
         }
     }
 }

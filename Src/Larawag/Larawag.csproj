@@ -128,6 +128,9 @@
     <Compile Include="EarlyBoundStaticDriver\Controls\CRMLoginForm.xaml.cs">
       <DependentUpon>CRMLoginForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EarlyBoundStaticDriver\Controls\LibrarySelectorOpenLogs.xaml.cs">
+      <DependentUpon>LibrarySelectorOpenLogs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EarlyBoundStaticDriver\EarlyBoundStaticDriver.cs" />
     <Compile Include="EarlyBoundStaticDriver\ViewModels\DriverSetupFinished.cs" />
     <Compile Include="EarlyBoundStaticDriver\ViewModels\LibrarySelectorViewModel.cs" />
@@ -157,6 +160,10 @@
     <Page Include="EarlyBoundStaticDriver\Controls\CRMLoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EarlyBoundStaticDriver\Controls\LibrarySelectorOpenLogs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

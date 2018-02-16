@@ -51,23 +51,19 @@
                 <fa:ImageAwesome Icon="Check" Width="16"  Height="16"/>
                 <Label Content="Finished succesfully"/>
             </StackPanel>
-            <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
-            </Label>
+            <local:LibrarySelectorOpenLogs />
         </StackPanel>
         <StackPanel Visibility="{Binding CommandGenerateDll.Execution.IsFaulted,
                                                         FallbackValue=Collapsed,
                                                         TargetNullValue=Collapsed,
                                                         Converter={StaticResource BoolToVis}}"
                                            >
-            <StackPanel Orientation="Horizontal">
+            <DockPanel>
                 <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
-                <Label Content="Error occured: "/>
-                <TextBlock Text="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
-            </StackPanel>
-            <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
-            </Label>
+                <Label VerticalAlignment="Center" Content="Error occured: "/>
+                <TextBlock VerticalAlignment="Center" Text="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
+            </DockPanel>
+            <local:LibrarySelectorOpenLogs />
         </StackPanel>
         
         
@@ -76,11 +72,11 @@
                                                         TargetNullValue=Collapsed,
                                                         Converter={StaticResource BoolToVis}}"
                                            >
-            <StackPanel Orientation="Horizontal">
+            <DockPanel>
                 <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
-                <Label Content="Error occured: "/>
-                <TextBlock Text="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
-            </StackPanel>
+                <Label VerticalAlignment="Center" Content="Error occured: "/>
+                <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
+            </DockPanel>
         </StackPanel>
 
         <DockPanel>

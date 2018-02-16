@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LINQPad.Extensibility.DataContext;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -67,6 +68,14 @@ namespace Larawag.Services
 
 
             return tcs.Task;
+        }
+
+        public string GetWorkingFolder(IDatabaseInfo dbInfo)
+        {
+            string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
+            string hostname = new Uri(dbInfo.Server).Host;
+            workingDirectory = Path.Combine(workingDirectory, hostname);
+            return workingDirectory;
         }
     }
 }
