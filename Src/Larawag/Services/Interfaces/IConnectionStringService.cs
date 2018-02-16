@@ -1,4 +1,5 @@
 ﻿using LINQPad.Extensibility.DataContext;
+using Microsoft.Xrm.Tooling.Connector;
 
 namespace Larawag.Services
 {
@@ -7,5 +8,7 @@ namespace Larawag.Services
         string GetConnectionString(IConnectionInfo connectionInfo);
 
         void SetPasword(string username, string password);
+
+        void ApplyDBInfoInfoFromClientService(CrmServiceClient crmSvc, IDatabaseInfo dbInfo);
     }
 }

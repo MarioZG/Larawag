@@ -1,4 +1,5 @@
 ﻿using LINQPad.Extensibility.DataContext;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,22 @@ namespace Larawag.Services
         public void SetPasword(string username, string password)
         {
             LINQPad.Util.SetPassword(PasswordPrefix + username, password);
+        }
+
+        public void ApplyDBInfoInfoFromClientService(CrmServiceClient crmSvc, IDatabaseInfo dbInfo) 
+        {
+            var username = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName;
+            var password = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
+            var url = crmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication];
+            var authType = crmSvc.ActiveAuthenticationType;
+
+            this.SetPasword(username, password);
+
+            dbInfo.UserName = username;
+            dbInfo.EncryptCustomCxString = true;
+            dbInfo.Server = url;
+
+            dbInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={authType};";
         }
     }
 }

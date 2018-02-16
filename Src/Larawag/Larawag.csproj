@@ -129,6 +129,7 @@
       <DependentUpon>CRMLoginForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="EarlyBoundStaticDriver\EarlyBoundStaticDriver.cs" />
+    <Compile Include="EarlyBoundStaticDriver\ViewModels\DriverSetupFinished.cs" />
     <Compile Include="EarlyBoundStaticDriver\ViewModels\LibrarySelectorViewModel.cs" />
     <Compile Include="EarlyBoundStaticDriver\ViewModels\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

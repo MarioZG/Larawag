@@ -1,4 +1,5 @@
 ﻿using Larawag.EarlyBoundStaticDriver.ViewModels;
+using Larawag.Services;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Tooling.CrmConnectControl;
@@ -61,11 +62,11 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
 
         public CRMLoginForm(IConnectionInfo cxInfo)
         {
-            _cxInfo = cxInfo;
+            this.cxInfo = cxInfo;
             DataContext = cxInfo.CustomTypeInfo;
             InitializeComponent();
             ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).ConnectionInfo = cxInfo;
-            ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).SetupCompleted += CRMLoginForm_SetupCompleted; ;
+            ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).SetupCompleted += CRMLoginForm_SetupCompleted;
 
             //// Should be used for testing only.
             //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
@@ -75,7 +76,8 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
             //};
         }
 
-        IConnectionInfo _cxInfo;
+        IConnectionInfo cxInfo;
+        private IConnectionStringService connectionStringService = new ConnectionStringService();
 
         /// <summary>
         /// Raised when the window loads for the first time. 
@@ -266,6 +268,13 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
                }
                 ));
 
+            //here we should be connected to crm and we need connection info to generate model if requested!
+
+            if (CrmConnectionMgr != null && CrmConnectionMgr.CrmSvc != null && CrmConnectionMgr.CrmSvc.IsReady)
+            {
+                connectionStringService.ApplyDBInfoInfoFromClientService(CrmConnectionMgr.CrmSvc, cxInfo.DatabaseInfo);
+            }
+
             //lame but works!
             CrmLoginCtrl.Visibility = Visibility.Collapsed;
             LibrarySelector.Visibility = Visibility.Visible;
@@ -279,8 +288,7 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
 
         private void CRMLoginForm_SetupCompleted(object sender, EventArgs e)
         {
-            if (ContextClassSelectionCompleted != null)
-                ContextClassSelectionCompleted(this, null);
+            ContextClassSelectionCompleted?.Invoke(this, e);
         }
 
     }

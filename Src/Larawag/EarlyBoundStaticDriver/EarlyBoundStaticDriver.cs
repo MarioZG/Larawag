@@ -37,36 +37,18 @@ namespace Larawag.EarlyBoundStaticDriver
         {
             CRMLoginForm loginForm = new CRMLoginForm(cxInfo);
             loginForm.ContextClassSelectionCompleted += LoginForm_ContextClassSelectionCompleted;
-            loginForm.ShowDialog();           
-
-            CrmConnectionManager connManager = loginForm.CrmConnectionMgr;
-
-            if (connManager != null && connManager.CrmSvc != null && connManager.CrmSvc.IsReady)
-            {
-                var username = connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName;
-                var password = connManager.CrmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
-                var url = connManager.CrmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication];
-                var authType = connManager.CrmSvc.ActiveAuthenticationType;
-                connectionStringService.SetPasword(username, password);
-                cxInfo.DatabaseInfo.UserName = username;
-                cxInfo.DatabaseInfo.EncryptCustomCxString = true;
-
-                cxInfo.DatabaseInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={authType};";
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var dialogResult = loginForm.ShowDialog().GetValueOrDefault();
+            return dialogResult;
         }
 
         private void LoginForm_ContextClassSelectionCompleted(object sender, EventArgs e)
         {
-            if (sender is CRMLoginForm)
+            if (sender is CRMLoginForm castedSender)
             {
-                ((CRMLoginForm)sender).Dispatcher.Invoke(() =>
+                castedSender.Dispatcher.Invoke(() =>
                 {
-                    ((CRMLoginForm)sender).Close();
+                    castedSender.DialogResult = ((DriverSetupFinished)e).Confirmed;
+                    castedSender.Close();
                 });
             }
         }

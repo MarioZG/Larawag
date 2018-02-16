@@ -62,12 +62,9 @@
                                            >
             <StackPanel Orientation="Horizontal">
                 <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
-                <Label Content="Error occured"/>
+                <Label Content="Error occured: "/>
+                <TextBlock Text="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
             </StackPanel>
-            <Label DockPanel.Dock="Right" Padding="1">
-                <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
-            </Label>
-            <Label Content="{Binding CommandGenerateDll.Execution.ErrorMessage}"/>
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Command="{Binding CommandOpenGenerateDllLog}">Open log file</Hyperlink>
             </Label>
@@ -82,7 +79,7 @@
             <StackPanel Orientation="Horizontal">
                 <fa:ImageAwesome Icon="Exclamation" Width="16" Height="16" />
                 <Label Content="Error occured: "/>
-                <Label Content="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
+                <TextBlock Text="{Binding CommandSelectClass.Execution.ErrorMessage}"/>
             </StackPanel>
         </StackPanel>
 

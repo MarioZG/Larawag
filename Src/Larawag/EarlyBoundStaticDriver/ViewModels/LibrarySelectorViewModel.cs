@@ -85,8 +85,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
         private void CancelSettingsClicked(object arg)
         {
-            //do nothing?
-            ConfirmSettingsClicked(arg);
+            SetupCompleted?.Invoke(this, new DriverSetupFinished(false));
         }
 
         private void OpenGenerateDllLogClicked(object arg)
@@ -169,20 +168,35 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
         private async Task<object> GenerateDllClicked(object arg)
         {
+            if (String.IsNullOrWhiteSpace(ConnectionInfo.DatabaseInfo.CustomCxString))
+            {
+                await Task.Run(async () => { throw new Exception("Missing connection string."); });
+            }
+            if (String.IsNullOrWhiteSpace(ConnectionInfo.DatabaseInfo.CustomCxString))
+            {
+                await Task.Run(async () => { throw new Exception("Missing connection server."); });
+            }
             string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
-            string fileName = workingDirectory+ "\\ContextCode.cs";
+            string hostname = new Uri(ConnectionInfo.DatabaseInfo.Server).Host;
+            workingDirectory = Path.Combine(workingDirectory, hostname);
+            if(! Directory.Exists(workingDirectory))
+            {
+                Directory.CreateDirectory(workingDirectory);
+            }
+            string fileName = Path.Combine(workingDirectory,"ContextCode.cs");
             var connectionString = connectionStringService.GetConnectionString(ConnectionInfo);
             bool codeGenerated = await contextGenerator.GenerateCode(connectionString, fileName);
             if (codeGenerated)
             {
-                bool compileDll = await compilerService.CompileCode(fileName, workingDirectory + "\\CrmContext.dll");
-                if(compileDll)
+                var dllPath = Path.Combine(workingDirectory, hostname+ ".dll");
+                var compilationErrors = await compilerService.CompileCode(fileName, dllPath, "");
+                if(compilationErrors.Count == 0)
                 {
-                    SetDllPath(workingDirectory + "\\CrmContext.dll");
+                    SetDllPath(dllPath);
                 }
                 else
                 {
-                    await Task.Run(async () => { throw new Exception("Error while compiling code."); });
+                    await Task.Run(async () => { throw new Exception("Error while compiling code:"+Environment.NewLine + String.Join(Environment.NewLine, compilationErrors)); });
                 }
             }
             else
@@ -194,10 +208,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
 
         private void ConfirmSettingsClicked(object arg)
         {
-            if(SetupCompleted != null)
-            {
-                SetupCompleted(this, null);
-            }
+            SetupCompleted?.Invoke(this, new DriverSetupFinished(true));
         }
 
         private bool ConfirmSettiingsCanExecute(object arg)
