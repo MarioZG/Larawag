@@ -40,5 +40,12 @@ namespace Larawag.Services
 
             dbInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={authType};";
         }
+
+        public bool AreConnectionsEquivalent(IConnectionInfo c1, IConnectionInfo c2)
+        {
+            var areEqual = c1.DatabaseInfo.UserName.ToLower() == c2.DatabaseInfo.UserName.ToLower()
+                && c1.DatabaseInfo.Server.ToLower() == c2.DatabaseInfo.Server.ToLower();
+            return areEqual;
+        }
     }
 }

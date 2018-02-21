@@ -151,5 +151,10 @@ namespace Larawag.EarlyBoundStaticDriver
             return new object[] { connection };
         }
         #endregion
+
+        public override bool AreRepositoriesEquivalent(IConnectionInfo c1, IConnectionInfo c2)
+        {
+            return connectionStringService.AreConnectionsEquivalent(c1, c2);
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace Larawag.Services
         void SetPasword(string username, string password);
 
         void ApplyDBInfoInfoFromClientService(CrmServiceClient crmSvc, IDatabaseInfo dbInfo);
+
+        bool AreConnectionsEquivalent(IConnectionInfo c1, IConnectionInfo c2);
     }
 }
