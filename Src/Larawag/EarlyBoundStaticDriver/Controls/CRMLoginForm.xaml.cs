@@ -117,23 +117,7 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
             // this wires an event that is raised when the user clicks the cancel button. 
             CrmLoginCtrl.UserCancelClicked += new EventHandler(CrmLoginCtrl_UserCancelClicked);
             // Check to see if its possible to do an Auto Login 
-            if (!mgr.RequireUserLogin())
-            {
-                if (MessageBox.Show("Credentials already saved in configuration\nChoose Yes to Auto Login or No to Reset Credentials", "Auto Login", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    // If RequireUserLogin is false, it means that there has been a successful login here before and the credentials are cached. 
-                    CrmLoginCtrl.IsEnabled = false;
-                    // When running an auto login,  you need to wire and listen to the events from the connection manager.
-                    // Run Auto User Login process, Wire events. 
-                    mgr.ServerConnectionStatusUpdate += new EventHandler<ServerConnectStatusEventArgs>(mgr_ServerConnectionStatusUpdate);
-                    mgr.ConnectionCheckComplete += new EventHandler<ServerConnectStatusEventArgs>(mgr_ConnectionCheckComplete);
-                    // Start the connection process. 
-                    mgr.ConnectToServerCheck();
 
-                    // Show the message grid. 
-                    CrmLoginCtrl.ShowMessageGrid();
-                }
-            }
         }
 
         #region Events
