@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Larawag.EarlyBoundStaticDriver.Controls.CrmConnection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Larawag.EarlyBoundStaticDriver.Controls"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <DockPanel>
+
+            <StackPanel Orientation="Vertical">
+                <Label Content="CRM connection" FontWeight="SemiBold" Background="{x:Static SystemColors.InactiveCaptionBrush}" Margin="0,0,0,5"/>
+                <Button ToolTip="Connect to CRM" 
+                    Command="{Binding CommandLoginToCrm}" 
+                    >
+                    <Button.Content>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding IsConnectionProvided, FallbackValue=collapsed, TargetNullValue=collapsed, Converter={StaticResource BoolToVis}}"
+                            >
+                                <Image Width="16" Height="16" 
+                                Source="pack://application:,,,/Larawag;component/Resources/connected-26.png"
+                                />
+                                <TextBlock Text="Change connection"/>
+                            </StackPanel>
+                            <StackPanel  Orientation="Horizontal"
+                            Visibility="{Binding InvertIsConnectionProvided, FallbackValue=collapsed, TargetNullValue=collapsed, Converter={StaticResource BoolToVis}}"
+                            >
+                                <Image Width="16" Height="16" 
+                                Source="pack://application:,,,/Larawag;component/Resources/disconnected-26.png"
+                                />
+                                <TextBlock Text="Connect to CRM"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Label Content="{Binding ConnectionInfo.DatabaseInfo.Server,   FallbackValue=&lt;empty&gt;, TargetNullValue=&lt;empty&gt;}" ContentStringFormat="Server: {0}"/>
+                <Label Content="{Binding ConnectionInfo.DatabaseInfo.Database, FallbackValue=&lt;empty&gt;, TargetNullValue=&lt;empty&gt;}" ContentStringFormat="Organisaion: {0}"/>
+                <Label Content="{Binding ConnectionInfo.DatabaseInfo.UserName, FallbackValue=&lt;empty&gt;, TargetNullValue=&lt;empty&gt;}" ContentStringFormat="Username: {0}"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>

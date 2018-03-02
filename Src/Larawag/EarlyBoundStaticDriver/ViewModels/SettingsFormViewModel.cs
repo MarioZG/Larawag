@@ -1,4 +1,5 @@
-﻿using Larawag.Services;
+﻿using Larawag.EarlyBoundStaticDriver.Controls;
+using Larawag.Services;
 using Larawag.Utils;
 using Larawag.Utils.Commands;
 using LINQPad.Extensibility.DataContext;
@@ -15,7 +16,7 @@ using System.Windows.Threading;
 
 namespace Larawag.EarlyBoundStaticDriver.ViewModels
 {
-    public class LibrarySelectorViewModel : ViewModelBase
+    public class SettingsFormViewModel : ViewModelBase
     {
         public ICommand CommandGenerateDll { get; private set; }
         public ICommand CommandOpenGenerateDllLog { get; private set; }
@@ -24,6 +25,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         public ICommand CommandSelectClass { get; private set; }
         public ICommand CommandConfirmSettings { get; private set; }
         public ICommand CommandCancelSettings { get; private set; }
+        public ICommand CommandLoginToCrm { get; private set; }
 
         private const string compilationLogFilename = "Compilationlog.txt";
 
@@ -35,8 +37,26 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         public IConnectionInfo ConnectionInfo
         {
             get { return connectionInfo; }
-            set { base.SetProperty<IConnectionInfo>(ref connectionInfo, value); }
+            set { base.SetProperty<IConnectionInfo>(ref connectionInfo, value, onChanged:() => RaisePropertyChangedEvent(nameof(IsConnectionProvided))); }
         }
+
+        public bool IsConnectionProvided
+        {
+            get
+            {
+                return connectionStringService.IsConnectionProvided(ConnectionInfo?.DatabaseInfo);
+            }
+        }
+
+        //crappy, will add proper converter when needed in more cases
+        public bool InvertIsConnectionProvided
+        {
+            get
+            {
+                return ! IsConnectionProvided;
+            }
+        }
+
 
         public StringBuilder GeneratorOutput { get; private set; } = new StringBuilder();
 
@@ -48,15 +68,16 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
         #endregion
 
 
-        public LibrarySelectorViewModel(IOrganizationServiceContextGenerator contextGenerator, ICompilerService compilerService, IConnectionStringService connectionStringService, Dispatcher dispatcher)
+        public SettingsFormViewModel(IOrganizationServiceContextGenerator contextGenerator, ICompilerService compilerService, IConnectionStringService connectionStringService, Dispatcher dispatcher)
         {
-            CommandGenerateDll =  new RealyAsyncCommand<object>(GenerateDllClicked);
+            CommandGenerateDll =  new RealyAsyncCommand<object>(GenerateDllClicked, CanGenerateDllClicked);
             CommandSelectDll = new RelayCommand(SelectDllClicked);
             CommandSelectClass = new RealyAsyncCommand<object>(SelectClassClicked, CanSelectClassClicked);
-            CommandConfirmSettings = new RelayCommand(ConfirmSettingsClicked, ConfirmSettiingsCanExecute);
+            CommandConfirmSettings = new RelayCommand<System.Windows.Window>(ConfirmSettingsClicked, ConfirmSettiingsCanExecute);
             CommandOpenGenerateDllLog = new RelayCommand(OpenGenerateDllLogClicked);
             CommandOpenCompileDllLog = new RelayCommand(OpenCompileDllLog);
-            CommandCancelSettings = new RelayCommand(CancelSettingsClicked);
+            CommandCancelSettings = new RelayCommand<System.Windows.Window>(CancelSettingsClicked);
+            CommandLoginToCrm = new RelayCommand(CommandLoginToCrmClicked);
 
             this.contextGenerator = contextGenerator;
 
@@ -86,26 +107,32 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             this.connectionStringService = connectionStringService;
         }
 
-        private void OpenCompileDllLog(object obj)
+        private void OpenCompileDllLog()
         {
             string workingDirectory = contextGenerator.GetWorkingFolder(ConnectionInfo.DatabaseInfo);
 
             Process.Start(Path.Combine(workingDirectory, compilationLogFilename));
         }
 
-        private void CancelSettingsClicked(object arg)
+        private void CancelSettingsClicked(System.Windows.Window window)
         {
             SetupCompleted?.Invoke(this, new DriverSetupFinished(false));
+            window.DialogResult = false;
+            window.Close();
         }
 
-        private void OpenGenerateDllLogClicked(object arg)
+        private void OpenGenerateDllLogClicked()
         {
             string workingDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(OrganizationServiceContextGenerator)).Location);
 
-            Process.Start(workingDirectory + "\\CrmSvcUtil.log");
+            var fielname = workingDirectory + "\\CrmSvcUtil.log";
+            if (File.Exists(fielname))
+            {
+                Process.Start(fielname);
+            }
         }
 
-        private void SelectDllClicked(object arg)
+        private void SelectDllClicked()
         {
             var dialog = new Microsoft.Win32.OpenFileDialog()
             {
@@ -176,6 +203,11 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             return tcs.Task;
         }
 
+        private bool CanGenerateDllClicked(object arg)
+        {
+            return connectionStringService.IsConnectionProvided(ConnectionInfo?.DatabaseInfo);
+        }
+    
         private async Task<object> GenerateDllClicked(object arg)
         {
             if (String.IsNullOrWhiteSpace(ConnectionInfo.DatabaseInfo.CustomCxString))
@@ -216,14 +248,38 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
             return null;
         }
 
-        private void ConfirmSettingsClicked(object arg)
+        private void ConfirmSettingsClicked(System.Windows.Window window)
         {
             SetupCompleted?.Invoke(this, new DriverSetupFinished(true));
+            window.DialogResult = true;
+            window.Close();
         }
 
-        private bool ConfirmSettiingsCanExecute(object arg)
+        private bool ConfirmSettiingsCanExecute(System.Windows.Window window)
         {
             return ! String.IsNullOrWhiteSpace(ConnectionInfo?.CustomTypeInfo?.CustomTypeName);
+        }
+
+        private void CommandLoginToCrmClicked()
+        {
+            CRMLoginForm loginForm = new CRMLoginForm(ConnectionInfo);
+            loginForm.ContextClassSelectionCompleted += LoginForm_ContextClassSelectionCompleted;
+            var dialogResult = loginForm.ShowDialog().GetValueOrDefault();
+            RaisePropertyChangedEvent(nameof(ConnectionInfo));
+            RaisePropertyChangedEvent(nameof(IsConnectionProvided));
+            RaisePropertyChangedEvent(nameof(InvertIsConnectionProvided));
+           // return dialogResult;
+        }
+        private void LoginForm_ContextClassSelectionCompleted(object sender, EventArgs e)
+        {
+            if (sender is CRMLoginForm castedSender)
+            {
+                castedSender.Dispatcher.Invoke(() =>
+                {
+                    //castedSender.DialogResult = ((DriverSetupFinished)e).Confirmed;
+                    castedSender.Close();
+                });
+            }
         }
     }
 }

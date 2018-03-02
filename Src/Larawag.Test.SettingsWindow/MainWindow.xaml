@@ -1,0 +1,13 @@
+﻿<Window x:Class="Larawag.Test.SettingsWindow.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Larawag.Test.SettingsWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <DockPanel>
+        <Button Content="Start Empty" HorizontalAlignment="Left" Margin="34,82,0,0" VerticalAlignment="Top" Width="150" Height="49" Click="Button_Click"/>
+        <Button Content="Start Filled" HorizontalAlignment="Left" Margin="45,82,0,0" VerticalAlignment="Top" Width="150" Height="49" Click="Button_Click_1"/>
+    </DockPanel>
+</Window>

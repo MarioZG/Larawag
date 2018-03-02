@@ -1,6 +1,4 @@
-﻿using Larawag.EarlyBoundStaticDriver.ViewModels;
-using Larawag.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +16,11 @@ using System.Windows.Shapes;
 namespace Larawag.EarlyBoundStaticDriver.Controls
 {
     /// <summary>
-    /// Interaction logic for LibrarySelector.xaml
+    /// Interaction logic for CrmConnection.xaml
     /// </summary>
-    public partial class LibrarySelector : UserControl
+    public partial class CrmConnection : UserControl
     {
-        public LibrarySelector()
+        public CrmConnection()
         {
             InitializeComponent();
         }

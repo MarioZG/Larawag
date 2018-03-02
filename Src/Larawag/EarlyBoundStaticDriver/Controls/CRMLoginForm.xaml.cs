@@ -65,8 +65,6 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
             this.cxInfo = cxInfo;
             DataContext = cxInfo.CustomTypeInfo;
             InitializeComponent();
-            ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).ConnectionInfo = cxInfo;
-            ((LibrarySelectorViewModel)this.LibrarySelector.DataContext).SetupCompleted += CRMLoginForm_SetupCompleted;
 
             //// Should be used for testing only.
             //ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) =>
@@ -208,7 +206,9 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
         {
             //Here we are using the bIsConnectedComplete bool to check to make sure we only process this call once. 
             if (e.ConnectSucceeded && !bIsConnectedComplete)
+            {
                 ProcessSuccess();
+            }
 
         }
 
@@ -230,7 +230,9 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
         private void CrmLoginCtrl_UserCancelClicked(object sender, EventArgs e)
         {
             if (!resetUiFlag)
+            {
                 this.Close();
+            }
         }
 
         #endregion
@@ -259,13 +261,10 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
                 connectionStringService.ApplyDBInfoInfoFromClientService(CrmConnectionMgr.CrmSvc, cxInfo.DatabaseInfo);
             }
 
-            //lame but works!
-            CrmLoginCtrl.Visibility = Visibility.Collapsed;
-            LibrarySelector.Visibility = Visibility.Visible;
-
-            //// Notify Caller that we are done with success. 
-            //if (ContextClassSelectionCompleted != null)
-            //    ContextClassSelectionCompleted(this, null);
+            this.DialogResult = true;
+            
+            // Notify Caller that we are done with success. 
+            ContextClassSelectionCompleted?.Invoke(this, null);
 
             resetUiFlag = false;
         }

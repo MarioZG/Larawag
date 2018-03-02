@@ -18,12 +18,17 @@ using System.Windows.Shapes;
 namespace Larawag.EarlyBoundStaticDriver.Controls
 {
     /// <summary>
-    /// Interaction logic for LibrarySelector.xaml
+    /// Interaction logic for SettingsForm.xaml
     /// </summary>
-    public partial class LibrarySelector : UserControl
+    public partial class SettingsForm : Window
     {
-        public LibrarySelector()
+        public SettingsForm()
         {
+            this.DataContext = new SettingsFormViewModel(
+                new OrganizationServiceContextGenerator(),
+                new CompilerService(),
+                new ConnectionStringService(),
+                this.Dispatcher);
             InitializeComponent();
         }
     }

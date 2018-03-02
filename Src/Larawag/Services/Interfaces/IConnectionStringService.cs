@@ -12,5 +12,6 @@ namespace Larawag.Services
         void ApplyDBInfoInfoFromClientService(CrmServiceClient crmSvc, IDatabaseInfo dbInfo);
 
         bool AreConnectionsEquivalent(IConnectionInfo c1, IConnectionInfo c2);
+        bool IsConnectionProvided(IDatabaseInfo databaseInfo);
     }
 }

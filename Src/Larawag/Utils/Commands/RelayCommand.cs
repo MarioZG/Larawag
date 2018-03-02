@@ -7,21 +7,32 @@ using System.Windows.Input;
 
 namespace Larawag.Utils.Commands
 {
-    public class RelayCommand : ICommand
+    //https://gist.github.com/schuster-rainer/2648922
+
+    public class RelayCommand : RelayCommand<object>
     {
-        Action<object> action;
-        Func<object, bool> canExecute;
+        public RelayCommand(Action execute)
+            : this(execute, null) { }
+
+        public RelayCommand(Action execute, Func<bool> canExecute)
+            : base(param => execute(), param => { return canExecute != null ? canExecute() : true; }) { }
+    }
+
+    public class RelayCommand<T> : ICommand  where T : class
+    {
+        Action<T> action; 
+        Func<T, bool> canExecute;
 
         protected RelayCommand()
         {
 
         }
 
-        public RelayCommand(Action<object> action) : this (action, null)
+        public RelayCommand(Action<T> action) : this (action, null)
         {
         }
 
-        public RelayCommand(Action<object> action, Func<object, bool> canExecute)
+        public RelayCommand(Action<T> action, Func<T, bool> canExecute)
         {
             this.action = action;
             this.canExecute = canExecute;
@@ -32,7 +43,7 @@ namespace Larawag.Utils.Commands
         {
             if (canExecute != null)
             {
-                return canExecute(parameter);
+                return canExecute(parameter as T);
             }
             else
             {
@@ -65,7 +76,7 @@ namespace Larawag.Utils.Commands
         {
             if (parameter != null)
             {
-                action(parameter);
+                action(parameter as T);
             }
             else
             {

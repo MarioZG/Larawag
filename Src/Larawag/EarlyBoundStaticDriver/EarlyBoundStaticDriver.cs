@@ -35,23 +35,13 @@ namespace Larawag.EarlyBoundStaticDriver
 
         public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
         {
-            CRMLoginForm loginForm = new CRMLoginForm(cxInfo);
-            loginForm.ContextClassSelectionCompleted += LoginForm_ContextClassSelectionCompleted;
-            var dialogResult = loginForm.ShowDialog().GetValueOrDefault();
-            return dialogResult;
+            SettingsForm form = new SettingsForm();
+            ((SettingsFormViewModel)(form.DataContext)).ConnectionInfo = cxInfo;
+            var dialogResult = form.ShowDialog();
+            return dialogResult.GetValueOrDefault();
         }
 
-        private void LoginForm_ContextClassSelectionCompleted(object sender, EventArgs e)
-        {
-            if (sender is CRMLoginForm castedSender)
-            {
-                castedSender.Dispatcher.Invoke(() =>
-                {
-                    castedSender.DialogResult = ((DriverSetupFinished)e).Confirmed;
-                    castedSender.Close();
-                });
-            }
-        }
+
 
         #region populate schema explorer - c&p from example
 
