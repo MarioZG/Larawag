@@ -35,6 +35,7 @@ namespace Larawag.Services
 
             this.SetPasword(username, password);
 
+            dbInfo.Provider = "Larawag.DynamicsCRM";
             dbInfo.UserName = username;
             dbInfo.EncryptCustomCxString = true;
             dbInfo.Server = url;
