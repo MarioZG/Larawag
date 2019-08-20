@@ -232,7 +232,7 @@ namespace Larawag.EarlyBoundStaticDriver.ViewModels
                 var dllPath = Path.Combine(workingDirectory, hostname+ ".dll");
                 var logFile = Path.Combine(workingDirectory, compilationLogFilename);
                 var compilationErrors = await compilerService.CompileCode(fileName, dllPath, logFile);
-                if(compilationErrors.Count == 0)
+                if(compilationErrors.Length == 0)
                 {
                     SetDllPath(dllPath);
                 }

@@ -9,4 +9,6 @@ rem  The final part of the directory is the name of the assembly plus its public
 
 echo "%USERPROFILE%\AppData\Local\LINQPad\Drivers\DataContext\4.6\Larawag (e8989d3adc1704f8)\"
 xcopy /i/y Larawag.* "%USERPROFILE%\AppData\Local\LINQPad\Drivers\DataContext\4.6\Larawag (e8989d3adc1704f8)\"
+xcopy /i/y System.* "%USERPROFILE%\AppData\Local\LINQPad\Drivers\DataContext\4.6\Larawag (e8989d3adc1704f8)\"
+xcopy /i/y Microsoft.* "%USERPROFILE%\AppData\Local\LINQPad\Drivers\DataContext\4.6\Larawag (e8989d3adc1704f8)\"
 pause
