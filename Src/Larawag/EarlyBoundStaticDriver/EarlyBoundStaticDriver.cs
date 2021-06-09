@@ -7,6 +7,7 @@ using Microsoft.Xrm.Tooling.CrmConnectControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -135,6 +136,8 @@ namespace Larawag.EarlyBoundStaticDriver
 
         public override object[] GetContextConstructorArguments(IConnectionInfo cxInfo)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var connString = connectionStringService.GetConnectionString(cxInfo);
             var connection = new CrmServiceClient(connString);
 

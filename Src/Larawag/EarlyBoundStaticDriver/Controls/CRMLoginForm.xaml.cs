@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -92,6 +93,8 @@ namespace Larawag.EarlyBoundStaticDriver.Controls
 
             // Set off flag. 
             bIsConnectedComplete = false;
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             // Init the CRM Connection manager.. 
             mgr = new CrmConnectionManager();

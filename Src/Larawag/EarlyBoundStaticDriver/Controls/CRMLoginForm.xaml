@@ -4,7 +4,7 @@
         xmlns:CrmLoginCtrl="clr-namespace:Microsoft.Xrm.Tooling.CrmConnectControl;assembly=Microsoft.Xrm.Tooling.CrmConnectControl" 
         xmlns:Controls="clr-namespace:Larawag.EarlyBoundStaticDriver.Controls" 
         xmlns:ViewModels="clr-namespace:Larawag.EarlyBoundStaticDriver.ViewModels"
-        Title="CRM Login" Width="465" Height="471"
+        Title="CRM Login." Width="465" Height="471"
         ResizeMode="CanResize" 
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen" 
