@@ -52,6 +52,9 @@
       <HintPath>..\packages\LINQPad.5.26.1\lib\net46\lprun.exe</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=3.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Common.3.2.1\lib\netstandard2.0\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
@@ -71,8 +74,7 @@
       <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.3.2.1\lib\netstandard2.0\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.34\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.42\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
@@ -81,47 +83,47 @@
       <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.64\lib\net462\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.92\lib\net462\Microsoft.Rest.ClientRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.34\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.42\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk.Deployment, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.34\lib\net462\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.26\lib\net462\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.42\lib\net462\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.64\lib\net462\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.92\lib\net462\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.CrmConnectControl, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.1.0.79\lib\net462\Microsoft.Xrm.Tooling.CrmConnectControl.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.1.0.92\lib\net462\Microsoft.Xrm.Tooling.CrmConnectControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.Ui.Styles, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.1.0.79\lib\net462\Microsoft.Xrm.Tooling.Ui.Styles.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.1.0.92\lib\net462\Microsoft.Xrm.Tooling.Ui.Styles.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Xrm.Tooling.WebResourceUtility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.1.0.79\lib\net462\Microsoft.Xrm.Tooling.WebResourceUtility.dll</HintPath>
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.WpfControls.9.1.0.92\lib\net462\Microsoft.Xrm.Tooling.WebResourceUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.Activities.Presentation" />
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
@@ -146,21 +148,21 @@
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.2\lib\netstandard2.0\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Reflection.Metadata, Version=1.4.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reflection.Metadata.1.6.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -169,8 +171,17 @@
     <Reference Include="System.Text.Encoding.CodePages, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.1\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.2\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
@@ -224,6 +235,13 @@
     <Compile Include="Utils\SoapLoggerOrganizationService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="bin\coretools\CrmSvcUtil.exe.config" />
+    <None Include="bin\coretools\LicenseTerms.docx" />
+    <None Include="bin\coretools\pacTelemetryUpload.exe.config" />
+    <None Include="bin\coretools\SolutionPackager.exe.config" />
+    <None Include="bin\Debug\CrmSvcUtil.exe.config" />
+    <None Include="bin\Release\CrmSvcUtil.exe.config" />
     <None Include="Larawag.snk" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -254,6 +272,318 @@
       <Link>header.xml</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="bin\coretools\CrmSvcUtil.exe" />
+    <Content Include="bin\coretools\CrmSvcUtil.xml" />
+    <Content Include="bin\coretools\Microsoft.ApplicationInsights.dll" />
+    <Content Include="bin\coretools\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="bin\coretools\Microsoft.PowerPlatform.Tooling.BatchedTelemetry.dll" />
+    <Content Include="bin\coretools\Microsoft.Rest.ClientRuntime.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
+    <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Ui.Styles.dll" />
+    <Content Include="bin\coretools\Newtonsoft.Json.dll" />
+    <Content Include="bin\coretools\Other Redistributable.txt" />
+    <Content Include="bin\coretools\pacTelemetryUpload.exe" />
+    <Content Include="bin\coretools\SolutionPackager.exe" />
+    <Content Include="bin\coretools\SolutionPackagerLib.dll" />
+    <Content Include="bin\coretools\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\coretools\System.Text.Json.dll" />
+    <Content Include="bin\coretools\System.ValueTuple.dll" />
+    <Content Include="bin\Debug\CrmSvcUtil.exe" />
+    <Content Include="bin\Debug\CrmSvcUtil.xml" />
+    <Content Include="bin\Debug\cs\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\cs\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\cs\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\cs\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\de\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\de\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\de\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\de\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\de\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\es\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\es\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\es\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\es\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\es\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\FontAwesome.WPF.dll" />
+    <Content Include="bin\Debug\FontAwesome.WPF.xml" />
+    <Content Include="bin\Debug\fr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\fr\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\fr\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\fr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\header.xml" />
+    <Content Include="bin\Debug\it\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\it\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\it\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\it\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\it\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ja\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ja\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\ja\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\ja\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ko\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ko\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\ko\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\ko\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\Larawag.dll" />
+    <Content Include="bin\Debug\Larawag.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.CSharp.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.CSharp.Workspaces.dll" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.CSharp.Workspaces.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.CSharp.Workspaces.xml" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.CSharp.xml" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.VisualBasic.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.VisualBasic.Workspaces.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.VisualBasic.Workspaces.xml" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.VisualBasic.xml" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.Workspaces.dll" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.Workspaces.pdb" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.Workspaces.xml" />
+    <Content Include="bin\Debug\Microsoft.CodeAnalysis.xml" />
+    <Content Include="bin\Debug\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="bin\Debug\Microsoft.Crm.Sdk.Proxy.xml" />
+    <Content Include="bin\Debug\Microsoft.CSharp.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.xml" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.xml" />
+    <Content Include="bin\Debug\Microsoft.Rest.ClientRuntime.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Deployment.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Workflow.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.Workflow.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Sdk.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Connector.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.CrmConnectControl.xml" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.Ui.Styles.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.WebResourceUtility.dll" />
+    <Content Include="bin\Debug\Microsoft.Xrm.Tooling.WebResourceUtility.xml" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
+    <Content Include="bin\Debug\pl\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\pl\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\pl\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\pl\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\pt-BR\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\pt-BR\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\pt-BR\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ru\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ru\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\ru\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\ru\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\System.Buffers.dll" />
+    <Content Include="bin\Debug\System.Buffers.xml" />
+    <Content Include="bin\Debug\System.Collections.Immutable.dll" />
+    <Content Include="bin\Debug\System.Collections.Immutable.xml" />
+    <Content Include="bin\Debug\System.Composition.AttributedModel.dll" />
+    <Content Include="bin\Debug\System.Composition.Convention.dll" />
+    <Content Include="bin\Debug\System.Composition.Hosting.dll" />
+    <Content Include="bin\Debug\System.Composition.Runtime.dll" />
+    <Content Include="bin\Debug\System.Composition.TypedParts.dll" />
+    <Content Include="bin\Debug\System.Memory.dll" />
+    <Content Include="bin\Debug\System.Memory.xml" />
+    <Content Include="bin\Debug\System.Numerics.Vectors.dll" />
+    <Content Include="bin\Debug\System.Numerics.Vectors.xml" />
+    <Content Include="bin\Debug\System.Reflection.Metadata.dll" />
+    <Content Include="bin\Debug\System.Reflection.Metadata.xml" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.Unsafe.xml" />
+    <Content Include="bin\Debug\System.Text.Encoding.CodePages.dll" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Extensions.xml" />
+    <Content Include="bin\Debug\tr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\tr\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\tr\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\tr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Debug\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\zh-Hant\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Debug\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Debug\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Debug\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\CrmSvcUtil.exe" />
+    <Content Include="bin\Release\CrmSvcUtil.xml" />
+    <Content Include="bin\Release\cs\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\cs\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\cs\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\cs\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\de\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\de\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\de\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\de\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\de\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\es\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\es\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\es\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\es\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\es\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\FontAwesome.WPF.dll" />
+    <Content Include="bin\Release\FontAwesome.WPF.xml" />
+    <Content Include="bin\Release\fr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\fr\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\fr\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\fr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\header.xml" />
+    <Content Include="bin\Release\it\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\it\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\it\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\it\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\it\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ja\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ja\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\ja\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\ja\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ko\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ko\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\ko\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\ko\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\Larawag.dll" />
+    <Content Include="bin\Release\Larawag.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.CSharp.dll" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.CSharp.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.CSharp.Workspaces.dll" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.CSharp.Workspaces.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.CSharp.Workspaces.xml" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.CSharp.xml" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.dll" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.VisualBasic.dll" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.VisualBasic.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.VisualBasic.Workspaces.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.VisualBasic.Workspaces.xml" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.VisualBasic.xml" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.Workspaces.dll" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.Workspaces.pdb" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.Workspaces.xml" />
+    <Content Include="bin\Release\Microsoft.CodeAnalysis.xml" />
+    <Content Include="bin\Release\Microsoft.Crm.Sdk.Proxy.dll" />
+    <Content Include="bin\Release\Microsoft.Crm.Sdk.Proxy.xml" />
+    <Content Include="bin\Release\Microsoft.CSharp.dll" />
+    <Content Include="bin\Release\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="bin\Release\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" />
+    <Content Include="bin\Release\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.xml" />
+    <Content Include="bin\Release\Microsoft.IdentityModel.Clients.ActiveDirectory.xml" />
+    <Content Include="bin\Release\Microsoft.Rest.ClientRuntime.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Sdk.Deployment.xml" />
+    <Content Include="bin\Release\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Sdk.Workflow.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Sdk.Workflow.xml" />
+    <Content Include="bin\Release\Microsoft.Xrm.Sdk.xml" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.Connector.xml" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.CrmConnectControl.xml" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.Ui.Styles.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.WebResourceUtility.dll" />
+    <Content Include="bin\Release\Microsoft.Xrm.Tooling.WebResourceUtility.xml" />
+    <Content Include="bin\Release\Newtonsoft.Json.dll" />
+    <Content Include="bin\Release\Newtonsoft.Json.xml" />
+    <Content Include="bin\Release\pl\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\pl\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\pl\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\pl\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\pt-BR\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\pt-BR\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\pt-BR\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ru\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ru\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\ru\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\ru\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\System.Buffers.dll" />
+    <Content Include="bin\Release\System.Buffers.xml" />
+    <Content Include="bin\Release\System.Collections.Immutable.dll" />
+    <Content Include="bin\Release\System.Collections.Immutable.xml" />
+    <Content Include="bin\Release\System.Composition.AttributedModel.dll" />
+    <Content Include="bin\Release\System.Composition.Convention.dll" />
+    <Content Include="bin\Release\System.Composition.Hosting.dll" />
+    <Content Include="bin\Release\System.Composition.Runtime.dll" />
+    <Content Include="bin\Release\System.Composition.TypedParts.dll" />
+    <Content Include="bin\Release\System.Memory.dll" />
+    <Content Include="bin\Release\System.Memory.xml" />
+    <Content Include="bin\Release\System.Numerics.Vectors.dll" />
+    <Content Include="bin\Release\System.Numerics.Vectors.xml" />
+    <Content Include="bin\Release\System.Reflection.Metadata.dll" />
+    <Content Include="bin\Release\System.Reflection.Metadata.xml" />
+    <Content Include="bin\Release\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\Release\System.Runtime.CompilerServices.Unsafe.xml" />
+    <Content Include="bin\Release\System.Text.Encoding.CodePages.dll" />
+    <Content Include="bin\Release\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\Release\System.Threading.Tasks.Extensions.xml" />
+    <Content Include="bin\Release\tr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\tr\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\tr\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\tr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\zh-Hans\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <Content Include="bin\Release\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <Content Include="bin\Release\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <Content Include="bin\Release\zh-Hant\Microsoft.CodeAnalysis.resources.dll" />
+    <Content Include="bin\Release\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.resources.dll" />
+    <Content Include="bin\Release\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll" />
+    <Content Include="bin\Release\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
     <Resource Include="Resources\connected-26.png" />
     <Resource Include="Resources\disconnected-26.png" />
   </ItemGroup>

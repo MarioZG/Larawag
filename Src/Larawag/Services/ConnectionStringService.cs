@@ -1,8 +1,10 @@
 ﻿using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
+using Microsoft.Xrm.Tooling.CrmConnectControl.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,11 +29,27 @@ namespace Larawag.Services
 
         public void ApplyDBInfoInfoFromClientService(CrmServiceClient crmSvc, IDatabaseInfo dbInfo) 
         {
-            var username = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName;
-            var password = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
+            string username = "", password = "";
             var url = crmSvc.ConnectedOrgPublishedEndpoints[Microsoft.Xrm.Sdk.Discovery.EndpointType.WebApplication];
             var authType = crmSvc.ActiveAuthenticationType;
             var orgName = crmSvc.ConnectedOrgFriendlyName;
+            
+            if (crmSvc.ActiveAuthenticationType == AuthenticationType.Office365)
+            {
+                username = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName;
+                password = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
+
+                dbInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={crmSvc.ActiveAuthenticationType};";
+            }
+            else if (crmSvc.ActiveAuthenticationType == AuthenticationType.OAuth)
+            {
+                var cred = CredentialManager.ReadCredentials("ShowConnectionDialog for Larawag_Default");
+                username = cred.UserName;
+                IntPtr bstr = Marshal.SecureStringToBSTR(cred.Password);
+                password = Marshal.PtrToStringBSTR(bstr);
+       
+                dbInfo.CustomCxString = $"AuthType=OAuth;Username={username}; Url={url};AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Never;";
+            }
 
             this.SetPasword(username, password);
 
@@ -41,7 +59,9 @@ namespace Larawag.Services
             dbInfo.Server = url;
             dbInfo.Database = orgName;
 
-            dbInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={authType};";
+
+
+
         }
 
         public bool AreConnectionsEquivalent(IConnectionInfo c1, IConnectionInfo c2)

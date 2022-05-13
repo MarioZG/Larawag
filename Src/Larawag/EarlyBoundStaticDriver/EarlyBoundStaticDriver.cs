@@ -137,7 +137,6 @@ namespace Larawag.EarlyBoundStaticDriver
         public override object[] GetContextConstructorArguments(IConnectionInfo cxInfo)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
             var connString = connectionStringService.GetConnectionString(cxInfo);
             var connection = new CrmServiceClient(connString);
 
