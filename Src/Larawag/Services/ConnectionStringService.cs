@@ -18,7 +18,7 @@ namespace Larawag.Services
         {
             var connString = connectionInfo.DatabaseInfo.CustomCxString;
             var password = LINQPad.Util.GetPassword(PasswordPrefix + connectionInfo.DatabaseInfo.UserName);
-            connString += $" Password ={ password};";
+            connString += $"Password='{password.Replace("&", "&amp;")}';";
             return connString;
         }
 
