@@ -1,17 +1,15 @@
 ﻿using Larawag.EarlyBoundStaticDriver.Controls;
 using Larawag.EarlyBoundStaticDriver.ViewModels;
 using Larawag.Services;
+using Larawag.Utils;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.Xrm.Tooling.Connector;
-using Microsoft.Xrm.Tooling.CrmConnectControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Larawag.EarlyBoundStaticDriver
 {
@@ -19,6 +17,7 @@ namespace Larawag.EarlyBoundStaticDriver
     {
 
         private IConnectionStringService connectionStringService  = new ConnectionStringService();
+        private OrgServiceLogger innerService;
 
 
         public override string Name { get { return "Dynamics early bound CRM Driver"; } }
@@ -146,8 +145,18 @@ namespace Larawag.EarlyBoundStaticDriver
                 throw new Exception(connection.LastCrmError);
             }
 
-            return new object[] { connection };
+            innerService =  new OrgServiceLogger(connection, new QueryToFetchXmlConverter(connection));
+
+            return new object[] { innerService };
         }
+
+        public override void InitializeContext(IConnectionInfo cxInfo, object context,
+                                        QueryExecutionManager executionManager)
+        {
+            innerService?.SetWriter(executionManager.SqlTranslationWriter);
+        }
+
+
         #endregion
 
         public override bool AreRepositoriesEquivalent(IConnectionInfo c1, IConnectionInfo c2)

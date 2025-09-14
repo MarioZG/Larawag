@@ -240,12 +240,13 @@
     <Compile Include="Services\Interfaces\ICompilerService.cs" />
     <Compile Include="Services\Interfaces\IOrganizationServiceContextGenerator.cs" />
     <Compile Include="Services\OrganizationServiceContextGenerator.cs" />
+    <Compile Include="Services\QueryToFetchXmlConverter.cs" />
     <Compile Include="Utils\AssemblyLoader.cs" />
     <Compile Include="Utils\Commands\IAsyncCommand.cs" />
     <Compile Include="Utils\Commands\NotifyTaskCompletion.cs" />
     <Compile Include="Utils\Commands\RealyAsyncCommand.cs" />
     <Compile Include="Utils\Commands\RelayCommand.cs" />
-    <Compile Include="Utils\SoapLoggerOrganizationService.cs" />
+    <Compile Include="Utils\OrgServiceLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
