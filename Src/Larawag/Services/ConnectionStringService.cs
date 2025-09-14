@@ -18,8 +18,8 @@ namespace Larawag.Services
         public string GetConnectionString(IConnectionInfo connectionInfo)
         {
             var connString = connectionInfo.DatabaseInfo.CustomCxString;
-            var password = LINQPad.Util.GetPassword(PasswordPrefix + connectionInfo.DatabaseInfo.UserName);
-            connString += $"Password='{password.Replace("&", "&amp;")}';";
+            //var password = LINQPad.Util.GetPassword(PasswordPrefix + connectionInfo.DatabaseInfo.UserName);
+            //connString += $"Password='{password.Replace("&", "&amp;")}';";
             return connString;
         }
 
@@ -38,7 +38,7 @@ namespace Larawag.Services
             if (crmSvc.ActiveAuthenticationType == AuthenticationType.Office365)
             {
                 username = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.UserName;
-                password = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
+                //password = crmSvc.OrganizationServiceProxy.ClientCredentials.UserName.Password;
 
                 dbInfo.CustomCxString = $"Url={url};  Username={username}; AuthType={crmSvc.ActiveAuthenticationType};";
             }
@@ -47,12 +47,12 @@ namespace Larawag.Services
                 var cred = CredentialManager.ReadCredentials("ShowConnectionDialog for Larawag_Default");
                 username = cred.UserName;
                 IntPtr bstr = Marshal.SecureStringToBSTR(cred.Password);
-                password = Marshal.PtrToStringBSTR(bstr);
+                //password = Marshal.PtrToStringBSTR(bstr);
 
                 dbInfo.CustomCxString = $"AuthType=OAuth;Username={username}; Url={url};AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto;";
             }
 
-            this.SetPasword(username, password);
+            //this.SetPasword(username, password);
 
             dbInfo.Provider = "Larawag.DynamicsCRM";
             dbInfo.UserName = username;
