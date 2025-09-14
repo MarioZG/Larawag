@@ -52,12 +52,15 @@ target BuildMaster
   <Target Name="CheckoutBranch" DependsOnTargets="PrepareOutDir">
     <Exec Command='"C:\Program Files\Git\cmd\git.exe" clone -b $(GitBranchName) --single-branch file://$(RootDir) $(BuildDir)\Src"'/>
   </Target>
-  <Target Name="Compile" DependsOnTargets="CheckoutBranch">
+  <Target Name="Restore" DependsOnTargets="CheckoutBranch">
+    <Exec Command='msbuild $(BuildDir)\Src\Src\Larawag.sln -t:restore -p:RestorePackagesConfig=true'/>
+  </Target>
+  <Target Name="Compile" DependsOnTargets="Restore">
     <Message Text="Compiling projects @(ProjectToBuild)"/>
     <MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=Release" />
   </Target>
   <Target Name="ExecuteTests" DependsOnTargets="Compile">
-    <Exec Command='"c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\MSTest.exe"  /resultsfile:$(BuildDir)\tests.trx /testcontainer:$(BuildDir)\$(ApplicationName)Tests\$(ApplicationName)Tests.dll' />
+    <Exec Command='MSTest.exe  /resultsfile:$(BuildDir)\tests.trx /testcontainer:$(BuildDir)\$(ApplicationName)Tests\$(ApplicationName)Tests.dll' />
   </Target>
   <Target Name="CopyBinaries" DependsOnTargets="Compile">
     <!-- versiopn still should be latest master-->
