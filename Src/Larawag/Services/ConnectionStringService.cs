@@ -3,6 +3,7 @@ using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Tooling.CrmConnectControl.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -47,8 +48,8 @@ namespace Larawag.Services
                 username = cred.UserName;
                 IntPtr bstr = Marshal.SecureStringToBSTR(cred.Password);
                 password = Marshal.PtrToStringBSTR(bstr);
-       
-                dbInfo.CustomCxString = $"AuthType=OAuth;Username={username}; Url={url};AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Never;";
+
+                dbInfo.CustomCxString = $"AuthType=OAuth;Username={username}; Url={url};AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97;LoginPrompt=Auto;";
             }
 
             this.SetPasword(username, password);

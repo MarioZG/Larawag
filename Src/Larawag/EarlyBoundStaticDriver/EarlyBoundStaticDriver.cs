@@ -140,6 +140,12 @@ namespace Larawag.EarlyBoundStaticDriver
             var connString = connectionStringService.GetConnectionString(cxInfo);
             var connection = new CrmServiceClient(connString);
 
+
+            if(! connection.IsReady)
+            {
+                throw new Exception(connection.LastCrmError);
+            }
+
             return new object[] { connection };
         }
         #endregion
